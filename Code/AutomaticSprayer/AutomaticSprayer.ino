@@ -3,15 +3,7 @@
 
 #include <Elegoo_GFX.h>    // Core graphics library
 #include <Elegoo_TFTLCD.h> // Hardware-specific library
-#include <TouchScreen.h>
-
-// The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
-#define LCD_CS A3 // Chip Select goes to Analog 3
-#define LCD_CD A2 // Command/Data goes to Analog 2
-#define LCD_WR A1 // LCD Write goes to Analog 1
-#define LCD_RD A0 // LCD Read goes to Analog 0
-
-#define LCD_RESET A4 // Can alternately just connect to Arduino's reset pin
+#include <TouchScreen.h>   // Core (non-specific) touchscreen library
 
 #define YP A2  // must be an analog pin, use "An" notation!
 #define XM A3  // must be an analog pin, use "An" notation!
@@ -23,8 +15,8 @@
 #define TS_MAXX 940
 #define TS_MAXY 940
 
-// Assign human-readable names to some common 16-bit color values:
-#define  BLACK   0x0000
+// Assign human-readable names to some common 16-bit color values //
+#define BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800
 #define GREEN   0x07E0
@@ -33,16 +25,15 @@
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
 
-Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
+Elegoo_TFTLCD tft; // I am using the shield, so all control and data lines are fixed and no pin numbers need to be declared here
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
-// If using the shield, all control and data lines are fixed, and a simpler declaration can optionally be used: Elegoo_TFTLCD tft;
 
 int hours = 8;
 int minutes = 0;
 int seconds = 0;
 
-int times = 0;
-int waitTimes = 0;
+int time = 0;
+int waitTime = 0;
 int wait = 15000;
 
 int relay = 53;
@@ -88,12 +79,12 @@ void loop() {
   if (reconfiguring == false) {
     buttonPress();
     delay(8);
-    if (times == 125) {
-      times = 0;
+    if (time == 125) {
+      time = 0;
       subtractTime();
     }
     else {
-      times++;
+      time++;
     }
   }
 }
@@ -448,9 +439,9 @@ void buttonPress() {
       while (spraying == true) {
         delay(1000);
         subtractTime();
-        waitTimes = waitTimes + 1000;
-        if (waitTimes == wait) {
-          waitTimes = 0;
+        waitTime = waitTime + 1000;
+        if (waitTime == wait) {
+          waitTime = 0;
           digitalWrite(relay, LOW);
           spraying = false;
         }
