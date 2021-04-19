@@ -66,6 +66,9 @@ bool answered4 = false;
 void setup() {
   Serial.begin(9600); // Initialize serial 
 
+  //Configure pins for the Adafruit ATWINC1500 Breakout
+   WiFi.setPins(47,48,49);
+
   connectToNetwork(); // Connect to home WiFi network
 
   tft.reset();
@@ -108,9 +111,9 @@ void loop() {
 }
 
 void connectToNetwork() {
-  // Check for the presence of the WiFi shield //
+  // Check for the presence of the WiFi board //
   if (WiFi.status() == WL_NO_SHIELD) {
-    Serial.println("WiFi shield is not present");
+    Serial.println("WiFi board is not present");
     while (true); // Don't continue
   }
 
@@ -127,10 +130,10 @@ void connectToNetwork() {
 }
 
 void printWifiStatus() {
-  // Print the SSID of the network the shield is connected to //
+  // Print the SSID of the network the board is connected to //
   Serial.println("SSID: " + WiFi.SSID());
 
-  // Print the WiFi shield's IP address //
+  // Print the WiFi board's IP address //
   IPAddress ip = WiFi.localIP();
   Serial.println("IP Address: " + ip);
 
