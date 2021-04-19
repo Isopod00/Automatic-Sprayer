@@ -25,13 +25,12 @@ The electronic components used in this project are:
 
 For this project I designed and 3D Printed a stand for the sprayer that also houses the electronics inside of it to keep everything compact.
 
-**CAD Program Used**
-Fusion 360
-**Slicer Program Used**
-Ultimaker Cura 
-**3D Printer Used**
-Ender 5 Pro
-**Filament Used**
-Black PLA
+**CAD Program Used:** Fusion 360
+
+**Slicer Program Used:** Ultimaker Cura 
+
+**3D Printer Used:** Ender 5 Pro
+
+**Filament Used:** Black PLA
 
 All of the STL and sliced G-Code files can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/master/CAD%20Files) on the project repository.
