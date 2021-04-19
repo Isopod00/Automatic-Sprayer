@@ -27,9 +27,9 @@ For this project I designed and 3D Printed a stand for the sprayer that also hou
 
 ##### CAD Program Used 
 Fusion 360
-#####Slicer Program Used
+##### Slicer Program Used
 Ultimaker Cura
-#####Filament Used
+##### Filament Used
 PLA
 
 All of the STL and sliced G-Code files can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/master/CAD%20Files) on the project repository.
