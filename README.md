@@ -7,7 +7,7 @@ Parts Used: 3D Printed stand for the sprayer that also houses the electronics, A
 
 Code Used: All of the code for this project is in a single .ino script that is run by the Arduino Mega. 
 
-##Electronics
+## Electronics
 
 The electronic components used in this project are:
   1) Arduino MEGA 2560 REV3
