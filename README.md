@@ -6,3 +6,12 @@ This is my Automatic Sprayer project. I made the first prototype of this project
 Parts Used: 3D Printed stand for the sprayer that also houses the electronics, Arduino Mega, 2.8" tft lcd Shield, Relay Module, 3.3v/5v Power Supply Module, Motorized Spray Bottle, and Wire.
 
 Code Used: All of the code for this project is in a single .ino script that is run by the Arduino Mega. 
+
+##Electronics
+
+The electronic components used in this project are:
+  1) Arduino MEGA 2560 REV3
+  2) ELEGOO 2.8 Inch TFT LCD Touch Screen
+  3) 5v 1 Channel Relay Module
+  4) 3.3v/5v Power Supply Module
+  5) Motorized Spray Bottle
