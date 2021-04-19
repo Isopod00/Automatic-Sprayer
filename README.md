@@ -7,6 +7,9 @@ This is my Automatic Sprayer project. I made the first prototype of this project
 
 All of the code for this project is in a single .ino script that is run by the Arduino Mega. 
 
+The main functions of the code are to:
+  1. 
+
 ### Electronics
 
 The electronic components used in this project are:
@@ -18,4 +21,10 @@ The electronic components used in this project are:
 
 ### 3D Printed Parts
 
-3D Printed stand for the sprayer that also houses the electronics.
+For this project I designed and 3D Printed a stand for the sprayer that also houses the electronics inside of it to keep everything compact.
+
+CAD Program Used: Fusion 360
+Slicer Program Used: Ultimaker Cura
+Filament Used: PLA
+
+All of the STL and sliced G-Code files can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/master/CAD%20Files) on the project repository.
