@@ -8,7 +8,6 @@
 // Libraries required for WiFi connectivity & OTA updates //
 #include <SPI.h>
 #include <WiFi101.h>
-#include <WiFi101OTA.h>
 
 // Enter sensitive data (WiFi name & password) in the Secret tab/arduino_secrets.h //
 #include "arduino_secrets.h" 
@@ -50,7 +49,7 @@ int time = 0;
 int waitTime = 0;
 int wait = 15000;
 
-int relay = 53;
+int relay = 41;
 
 bool reconfiguring = true;
 bool spraying = false;
@@ -67,7 +66,7 @@ void setup() {
   Serial.begin(9600); // Initialize serial 
 
   //Configure pins for the Adafruit ATWINC1500 Breakout
-   WiFi.setPins(47,48,49);
+   WiFi.setPins(35,37,39);
 
   connectToNetwork(); // Connect to home WiFi network
 
@@ -94,9 +93,7 @@ void setup() {
   configSystem();
 }
 
-void loop() { 
-  WiFiOTA.poll(); // check for WiFi OTA updates
-  
+void loop() {   
   if (!reconfiguring) {
     buttonPress();
     delay(8);
@@ -119,27 +116,29 @@ void connectToNetwork() {
 
   // Attempt to connect to Wifi network //
   while (status != WL_CONNECTED) {
-    Serial.println("Attempting to connect to SSID: " + ssid);
+    Serial.print("Attempting to connect to SSID: ");
+    Serial.println(ssid);
     status = WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
   }
-
-  // Start the WiFi OTA library with internal (flash) based storage //
-  WiFiOTA.begin("Arduino", "password", InternalStorage);
 
   printWifiStatus(); // Should be connected now, so print out the status
 }
 
 void printWifiStatus() {
   // Print the SSID of the network the board is connected to //
-  Serial.println("SSID: " + WiFi.SSID());
+  Serial.print("SSID: ");
+  Serial.println(WiFi.SSID());
 
   // Print the WiFi board's IP address //
   IPAddress ip = WiFi.localIP();
-  Serial.println("IP Address: " + ip);
+  Serial.print("IP Address: ");
+  Serial.println(ip);
 
   // Print the received signal strength //
   long rssi = WiFi.RSSI();
-  Serial.println("signal strength (RSSI): " + rssi + " dBm");
+  Serial.print("signal strength (RSSI): ");
+  Serial.print(rssi);
+  Serial.println(" dBm");
 }
 
 void boot() {
