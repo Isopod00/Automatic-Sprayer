@@ -14,7 +14,7 @@
 
 void setup() {
   //Configure pins for Adafruit ATWINC1500 Breakout
-  WiFi.setPins(8,7,4);
+  WiFi.setPins(35,37,39);
 
   // Initialize serial
   Serial.begin(9600);

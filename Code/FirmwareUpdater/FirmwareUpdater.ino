@@ -39,7 +39,7 @@ static const int MAX_PAYLOAD_SIZE = 1024;
 
 void setup() {
   //Configure pins for Adafruit ATWINC1500 Breakout
-  WiFi.setPins(8,7,4);
+  WiFi.setPins(35,37,39);
 
   Serial.begin(115200);
 
