@@ -8,6 +8,7 @@
 // Libraries required for WiFi connectivity & OTA updates //
 #include <SPI.h>
 #include <WiFi101.h>
+#include <ArduinoOTA.h>
 
 // Enter sensitive data (WiFi name & password) in the Secret tab/arduino_secrets.h //
 #include "arduino_secrets.h" 
@@ -66,7 +67,7 @@ void setup() {
   Serial.begin(9600); // Initialize serial 
 
   //Configure pins for the Adafruit ATWINC1500 Breakout
-   WiFi.setPins(35,37,39);
+  WiFi.setPins(35,37,39);
 
   connectToNetwork(); // Connect to home WiFi network
 
@@ -93,7 +94,10 @@ void setup() {
   configSystem();
 }
 
-void loop() {   
+void loop() {
+  // check for WiFi OTA updates
+  ArduinoOTA.poll();
+     
   if (!reconfiguring) {
     buttonPress();
     delay(8);
@@ -120,6 +124,9 @@ void connectToNetwork() {
     Serial.println(ssid);
     status = WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
   }
+
+  // start the WiFi OTA library with internal (flash) based storage
+  ArduinoOTA.begin(WiFi.localIP(), "Arduino", "password", InternalStorage);
 
   printWifiStatus(); // Should be connected now, so print out the status
 }
