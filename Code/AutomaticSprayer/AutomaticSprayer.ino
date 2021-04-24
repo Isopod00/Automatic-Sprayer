@@ -3,7 +3,21 @@
 
 #include <Elegoo_GFX.h>    // Core graphics library
 #include <Elegoo_TFTLCD.h> // Hardware-specific library
-#include <TouchScreen.h>
+#include <TouchScreen.h>   // Core (non-specific) touchscreen library
+
+// Libraries required for WiFi connectivity & OTA updates //
+#include <SPI.h>
+#include <WiFi101.h>
+#include <ArduinoOTA.h>
+
+// Enter sensitive data (WiFi name & password) in the Secret tab/arduino_secrets.h //
+#include "arduino_secrets.h" 
+
+// Wifi Settings //
+char ssid[] = SECRET_SSID; // WiFi network SSID (name)
+char pass[] = SECRET_PASS; // WiFi network password
+
+int status = WL_IDLE_STATUS;
 
 // The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
 #define LCD_CS A3 // Chip Select goes to Analog 3
@@ -23,8 +37,8 @@
 #define TS_MAXX 940
 #define TS_MAXY 940
 
-// Assign human-readable names to some common 16-bit color values:
-#define  BLACK   0x0000
+// Assign human-readable names to some common 16-bit color values //
+#define BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800
 #define GREEN   0x07E0
@@ -35,17 +49,17 @@
 
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
-// If using the shield, all control and data lines are fixed, and a simpler declaration can optionally be used: Elegoo_TFTLCD tft;
 
 int hours = 8;
 int minutes = 0;
 int seconds = 0;
 
-int times = 0;
-int waitTimes = 0;
+int time = 0;
+int waitTime = 0;
 int wait = 15000;
 
-int relay = 53;
+int wifiEnable = 41;
+int relay = 45;
 
 bool reconfiguring = true;
 bool spraying = false;
@@ -59,7 +73,17 @@ bool answered3 = false;
 bool answered4 = false;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600); // Initialize serial 
+
+  //Configure pins for the Adafruit ATWINC1500 Breakout
+  WiFi.setPins(35,37,39);
+
+  // Manually reset the WiFi board //
+  pinMode(wifiEnable, OUTPUT);
+  digitalWrite(wifiEnable, LOW);
+  digitalWrite(wifiEnable, HIGH);
+
+  connectToNetwork(); // Connect to home WiFi network
 
   tft.reset();
 
@@ -85,17 +109,57 @@ void setup() {
 }
 
 void loop() {
-  if (reconfiguring == false) {
+  // Check for WiFi OTA updates
+  ArduinoOTA.poll();
+     
+  if (!reconfiguring) {
     buttonPress();
     delay(8);
-    if (times == 125) {
-      times = 0;
+    if (time == 125) {
+      time = 0;
       subtractTime();
     }
     else {
-      times++;
+      time++;
     }
   }
+}
+
+void connectToNetwork() {
+  // Check for the presence of the WiFi board //
+  if (WiFi.status() == WL_NO_SHIELD) {
+    Serial.println("WiFi board is not present");
+    while (true); // Don't continue
+  }
+
+  // Attempt to connect to Wifi network //
+  while (status != WL_CONNECTED) {
+    Serial.print("Attempting to connect to SSID: ");
+    Serial.println(ssid);
+    status = WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
+  }
+
+  // start the WiFi OTA library with internal (flash) based storage
+  ArduinoOTA.begin(WiFi.localIP(), "Arduino", "password", InternalStorage);
+
+  printWifiStatus(); // Should be connected now, so print out the status
+}
+
+void printWifiStatus() {
+  // Print the SSID of the network the board is connected to //
+  Serial.print("SSID: ");
+  Serial.println(WiFi.SSID());
+
+  // Print the WiFi board's IP address //
+  IPAddress ip = WiFi.localIP();
+  Serial.print("IP Address: ");
+  Serial.println(ip);
+
+  // Print the received signal strength //
+  long rssi = WiFi.RSSI();
+  Serial.print("signal strength (RSSI): ");
+  Serial.print(rssi);
+  Serial.println(" dBm");
 }
 
 void boot() {
@@ -150,7 +214,10 @@ void configSystem() {
   tft.drawRect(150, 210, 80, 50, WHITE);
   tft.setCursor(170, 220);
   tft.print("NO");
-  while (answered1 == false) {
+  while (!answered1) {
+    // Check for WiFi OTA updates
+    ArduinoOTA.poll();
+  
     TSPoint p = ts.getPoint();
 
     if (p.z > ts.pressureThreshhold) {
@@ -211,7 +278,10 @@ void configSystem() {
         tft.setCursor(176, 208);
         tft.print("12");
 
-        while (answered2 == false) {
+        while (!answered2) {
+          // Check for WiFi OTA updates
+          ArduinoOTA.poll();
+  
           TSPoint p = ts.getPoint();
 
           if (p.z > ts.pressureThreshhold) {
@@ -268,7 +338,7 @@ void configSystem() {
               answered2 = true;
               assignedHours = 12;
             }
-            if (answered2 == true) {
+            if (answered2) {
               tft.fillScreen(BLUE);
               config2();
             }
@@ -283,10 +353,10 @@ void subtractTime() {
   if (seconds == 0) {
     if (minutes == 0) {
       if (hours == 0) {
-        if (spraying == false) {
+        if (!spraying) {
           tft.fillRect(72, 19, 250, 18, BLUE);
         }
-        if (answered2 == true) {
+        if (answered2) {
           digitalWrite(relay, HIGH);
           delay(wait);
           digitalWrite(relay, LOW);
@@ -302,7 +372,7 @@ void subtractTime() {
         seconds = 0;
       }
       else {
-        if (spraying == false) {
+        if (!spraying) {
           tft.fillRect(72, 19, 250, 18, BLUE);
         }
         hours = hours - 1;
@@ -311,7 +381,7 @@ void subtractTime() {
       }
     }
     else {
-      if (spraying == false) {
+      if (!spraying) {
         tft.fillRect(72, 19, 250, 18, BLUE);
       }
       minutes = minutes - 1;
@@ -319,7 +389,7 @@ void subtractTime() {
     }
   }
   else {
-    if (spraying == false) {
+    if (!spraying) {
       tft.fillRect(72, 19, 250, 18, BLUE);
     }
     seconds = seconds - 1;
@@ -327,10 +397,10 @@ void subtractTime() {
   if (hours == 0) {
     if (minutes == 0) {
       if (seconds == 0) {
-        if (spraying == false) {
+        if (!spraying) {
           tft.fillRect(0, 0, 300, 50, BLUE);
         }
-        if (answered2 == true) {
+        if (answered2) {
           tft.setTextSize(2);
           tft.setCursor(10, 20);
           tft.print("Spraying Enclosure");
@@ -352,11 +422,11 @@ void subtractTime() {
         seconds = 0;
       }
     }
-    if (spraying == false) {
+    if (!spraying) {
       tft.fillRect(0, 19, 300, 18, BLUE);
     }
   }
-  if (spraying == false) {
+  if (!spraying) {
     tft.setTextSize(2);
     tft.setCursor(20, 1);
     tft.print("Time Until Next");
@@ -372,7 +442,7 @@ void subtractTime() {
 }
 
 void endConfig() {
-  if (answered4 == true) {
+  if (answered4) {
     wait = assignedWait;
   }
   tft.setCursor(45, 155);
@@ -382,7 +452,7 @@ void endConfig() {
   tft.println("is complete!");
   delay(4000);
   tft.fillScreen(BLUE);
-  if (answered2 == true) {
+  if (answered2) {
     hours = assignedHours;
   }
   tft.setRotation(2);
@@ -445,12 +515,12 @@ void buttonPress() {
       tft.setCursor(10, 20);
       tft.print("Spraying Enclosure");
       digitalWrite(relay, HIGH);
-      while (spraying == true) {
+      while (spraying) {
         delay(1000);
         subtractTime();
-        waitTimes = waitTimes + 1000;
-        if (waitTimes == wait) {
-          waitTimes = 0;
+        waitTime = waitTime + 1000;
+        if (waitTime == wait) {
+          waitTime = 0;
           digitalWrite(relay, LOW);
           spraying = false;
         }
@@ -489,7 +559,10 @@ void config2()
   tft.setCursor(170, 220);
   tft.print("NO");
 
-  while (answered3 == false) {
+  while (!answered3) {
+    // Check for WiFi OTA updates
+    ArduinoOTA.poll();
+  
     TSPoint p = ts.getPoint();
 
     if (p.z > ts.pressureThreshhold) {
@@ -553,7 +626,10 @@ void config2()
         tft.setCursor(177, 208);
         tft.print("30");
 
-        while (answered4 == false) {
+        while (!answered4) {
+          // Check for WiFi OTA updates
+          ArduinoOTA.poll();
+  
           TSPoint p = ts.getPoint();
 
           if (p.z > ts.pressureThreshhold) {
@@ -610,7 +686,7 @@ void config2()
               answered4 = true;
               assignedWait = 30000;
             }
-            if (answered4 == true) {
+            if (answered4) {
              tft.fillScreen(BLUE);
              endConfig();
             }
