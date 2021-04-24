@@ -8,9 +8,12 @@ This is my Automatic Sprayer project. I made the first prototype of this project
 All of the code for this project is in a single .ino script that is run by the Arduino Mega. 
 
 The main functions of the code are to:
-  1. Allow the user to configure system settings such as the interval between sprays and the spray duration using the touch screen
-  2. Keep track of the time remaining until the next spray and display it to the user on the screen
-  3. Allow the user to manually initiate a spray whenever they want via a digital button on the touch screen
+  1. Connect to my home wifi network to allow for OTA software update functionality
+  2. Allow the user to configure system settings such as the interval between sprays and the spray duration using the touch screen
+  3. Keep track of the time remaining until the next spray and display it to the user on the screen
+  4. Allow the user to manually initiate a spray whenever they want via a digital button on the touch screen
+
+The code for this project utilizes the Elegoo_GFX, Elegoo_TFTLCD, Touchscreen, SPI, WiFi101, and ArduinoOTA libraries, all of which can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/master/Libraries) in the project repository.
 
 ### Electronics
 
@@ -36,4 +39,4 @@ For this project I designed and 3D Printed a stand for the sprayer that also hou
 
 **Filament Used:** Black PLA
 
-All of the STL and sliced G-Code files can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/master/CAD%20Files) on the project repository.
+All of the STL and sliced G-Code files can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/master/CAD%20Files) in the project repository.
