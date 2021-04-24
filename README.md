@@ -5,7 +5,7 @@ This is my Automatic Sprayer project. I made the first prototype of this project
 
 ### Code
 
-All of the code for this project is in a single .ino script that is run by the Arduino Mega. 
+All of the code for this project is in a single [.ino script](https://github.com/Isopod00/Automatic-Sprayer/blob/master/Code/AutomaticSprayer/AutomaticSprayer.ino) that is run by the Arduino Mega. 
 
 The main functions of the code are to:
   1. Connect to my home wifi network to allow for OTA software update functionality
