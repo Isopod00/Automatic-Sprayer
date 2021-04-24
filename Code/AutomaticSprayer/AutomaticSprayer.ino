@@ -59,7 +59,7 @@ int waitTime = 0;
 int wait = 15000;
 
 int wifiEnable = 41;
-int relay = 43;
+int relay = 45;
 
 bool reconfiguring = true;
 bool spraying = false;
