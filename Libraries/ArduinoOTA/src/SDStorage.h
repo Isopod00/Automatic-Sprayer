@@ -16,30 +16,40 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#ifndef _INTERNAL_STORAGE_H_INCLUDED
-#define _INTERNAL_STORAGE_H_INCLUDED
+#ifndef _SD_STORAGE_H_INCLUDED
+#define _SD_STORAGE_H_INCLUDED
+
+#include <SD.h>
 
 #include "OTAStorage.h"
 
-class InternalStorageClass : public OTAStorage {
+#ifndef SDCARD_SS_PIN
+#define SDCARD_SS_PIN 4
+#endif
+
+class SDStorageClass : public ExternalOTAStorage {
 public:
-  virtual int open();
-  virtual size_t write(uint8_t);
-  virtual void close();
-  virtual void clear();
-  virtual void apply();
-  virtual long maxSize();
+
+  virtual int open(int length) {
+    _file = SD.open(updateFileName, O_CREAT | O_WRITE);
+    if (!_file)
+      return 0;
+    return 1;
+  }
+
+  virtual size_t write(uint8_t b) {
+    return _file.write(b);
+  }
+  virtual void close() {
+    _file.close();
+  }
+
+  virtual void clear() {
+    SD.remove(updateFileName);
+  }
 
 private:
-  union {
-    uint32_t u32;
-    uint8_t u8[4];
-  } _addressData;
-
-  int _writeIndex;
-  uint32_t* _writeAddress;
+  File _file;
 };
-
-extern InternalStorageClass InternalStorage;
 
 #endif

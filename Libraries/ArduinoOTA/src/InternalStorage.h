@@ -14,42 +14,44 @@
   You should have received a copy of the GNU Lesser General Public
   License along with this library; if not, write to the Free Software
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+ WiFi101OTA version Feb 2017
+ by Sandeep Mistry (Arduino)
+ modified for ArduinoOTA Dec 2018
+ by Juraj Andrassy
 */
 
-#include "SDStorage.h"
+#ifndef _INTERNAL_STORAGE_H_INCLUDED
+#define _INTERNAL_STORAGE_H_INCLUDED
 
-#define UPDATE_FILE "UPDATE.BIN"
+#include "OTAStorage.h"
 
-int SDStorageClass::open()
-{
-  _file = SD.open(UPDATE_FILE, FILE_WRITE);
+class InternalStorageClass : public OTAStorage {
+public:
 
-  if (!_file) {
-    return 0;
-  }
+  InternalStorageClass();
 
-  return 1;
-}
+  virtual int open(int length);
+  virtual size_t write(uint8_t);
+  virtual void close();
+  virtual void clear();
+  virtual void apply();
+  virtual long maxSize();
 
-size_t SDStorageClass::write(uint8_t b)
-{
-  return _file.write(b);
-}
+  void debugPrint();
 
-void SDStorageClass::close()
-{
-  _file.close();
-}
+private:
+  const uint32_t MAX_PARTIONED_SKETCH_SIZE, STORAGE_START_ADDRESS;
 
-void SDStorageClass::clear()
-{
-  SD.remove(UPDATE_FILE);
-}
+  union {
+    uint32_t u32;
+    uint8_t u8[4];
+  } _addressData;
 
-void SDStorageClass::apply()
-{
-  // just reset, SDU copies the data to flash
-  NVIC_SystemReset();
-}
+  int _writeIndex;
+  uint32_t* _writeAddress;
+};
 
-SDStorageClass SDStorage;
+extern InternalStorageClass InternalStorage;
+
+#endif
