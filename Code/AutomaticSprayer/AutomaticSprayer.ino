@@ -50,7 +50,8 @@ int time = 0;
 int waitTime = 0;
 int wait = 15000;
 
-int relay = 41;
+int wifiEnable = 41;
+int relay = 43;
 
 bool reconfiguring = true;
 bool spraying = false;
@@ -68,6 +69,11 @@ void setup() {
 
   //Configure pins for the Adafruit ATWINC1500 Breakout
   WiFi.setPins(35,37,39);
+
+  // Manually reset the WiFi board //
+  pinMode(wifiEnable, OUTPUT);
+  digitalWrite(wifiEnable, LOW);
+  digitalWrite(wifiEnable, HIGH);
 
   connectToNetwork(); // Connect to home WiFi network
 
