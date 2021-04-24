@@ -39,7 +39,7 @@ int status = WL_IDLE_STATUS;
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
 
-Elegoo_TFTLCD tft; // I am using the shield, so all control and data lines are fixed and no pin numbers need to be declared here
+Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 
 int hours = 8;
