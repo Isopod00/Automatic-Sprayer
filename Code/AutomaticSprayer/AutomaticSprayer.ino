@@ -109,7 +109,7 @@ void setup() {
 }
 
 void loop() {
-  // check for WiFi OTA updates
+  // Check for WiFi OTA updates
   ArduinoOTA.poll();
      
   if (!reconfiguring) {
@@ -215,6 +215,9 @@ void configSystem() {
   tft.setCursor(170, 220);
   tft.print("NO");
   while (!answered1) {
+    // Check for WiFi OTA updates
+    ArduinoOTA.poll();
+  
     TSPoint p = ts.getPoint();
 
     if (p.z > ts.pressureThreshhold) {
@@ -276,6 +279,9 @@ void configSystem() {
         tft.print("12");
 
         while (!answered2) {
+          // Check for WiFi OTA updates
+          ArduinoOTA.poll();
+  
           TSPoint p = ts.getPoint();
 
           if (p.z > ts.pressureThreshhold) {
@@ -554,6 +560,9 @@ void config2()
   tft.print("NO");
 
   while (!answered3) {
+    // Check for WiFi OTA updates
+    ArduinoOTA.poll();
+  
     TSPoint p = ts.getPoint();
 
     if (p.z > ts.pressureThreshhold) {
@@ -618,6 +627,9 @@ void config2()
         tft.print("30");
 
         while (!answered4) {
+          // Check for WiFi OTA updates
+          ArduinoOTA.poll();
+  
           TSPoint p = ts.getPoint();
 
           if (p.z > ts.pressureThreshhold) {
