@@ -41,11 +41,13 @@ int status = WL_IDLE_STATUS;
 #define BLACK   0x0000
 #define BLUE    0x001F
 #define RED     0xF800
-#define GREEN   0x07E0
+#define GREEN   f0x07E0
 #define CYAN    0x07FF
 #define MAGENTA 0xF81F
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
+
+#define BACKGROUNDCOLOR CYAN // Custom the background color of the display!
 
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
@@ -163,7 +165,7 @@ void printWifiStatus() {
 }
 
 void boot() {
-  tft.fillScreen(BLUE);
+  tft.fillScreen(BACKGROUNDCOLOR);
   tft.setRotation(2);
   tft.setCursor(20, 0);
   tft.setTextColor(WHITE);
@@ -179,7 +181,7 @@ void boot() {
   tft.setTextSize(4);
   tft.println("Welcome!");
   delay(4000);
-  tft.fillScreen(BLUE);
+  tft.fillScreen(BACKGROUNDCOLOR);
 }
 
 void configSystem() {
@@ -193,7 +195,7 @@ void configSystem() {
   tft.setCursor(20, 175);
   tft.println("your system!");
   delay(4000);
-  tft.fillScreen(BLUE);
+  tft.fillScreen(BACKGROUNDCOLOR);
   tft.setCursor(20, 0);
   tft.setTextSize(2);
   tft.println("The default spray");
@@ -232,7 +234,7 @@ void configSystem() {
 
         answered1 = true;
 
-        tft.fillScreen(BLUE);
+        tft.fillScreen(BACKGROUNDCOLOR);
 
         config2();
       }
@@ -240,7 +242,7 @@ void configSystem() {
         pinMode(XM, OUTPUT);
         pinMode(YP, OUTPUT);
 
-        tft.fillScreen(BLUE);
+        tft.fillScreen(BACKGROUNDCOLOR);
 
         answered1 = true;
 
@@ -339,7 +341,7 @@ void configSystem() {
               assignedHours = 12;
             }
             if (answered2) {
-              tft.fillScreen(BLUE);
+              tft.fillScreen(BACKGROUNDCOLOR);
               config2();
             }
           }
@@ -354,7 +356,7 @@ void subtractTime() {
     if (minutes == 0) {
       if (hours == 0) {
         if (!spraying) {
-          tft.fillRect(72, 19, 250, 18, BLUE);
+          tft.fillRect(72, 19, 250, 18, BACKGROUNDCOLOR);
         }
         if (answered2) {
           digitalWrite(relay, HIGH);
@@ -373,7 +375,7 @@ void subtractTime() {
       }
       else {
         if (!spraying) {
-          tft.fillRect(72, 19, 250, 18, BLUE);
+          tft.fillRect(72, 19, 250, 18, BACKGROUNDCOLOR);
         }
         hours = hours - 1;
         minutes = 59;
@@ -382,7 +384,7 @@ void subtractTime() {
     }
     else {
       if (!spraying) {
-        tft.fillRect(72, 19, 250, 18, BLUE);
+        tft.fillRect(72, 19, 250, 18, BACKGROUNDCOLOR);
       }
       minutes = minutes - 1;
       seconds = 59;
@@ -390,7 +392,7 @@ void subtractTime() {
   }
   else {
     if (!spraying) {
-      tft.fillRect(72, 19, 250, 18, BLUE);
+      tft.fillRect(72, 19, 250, 18, BACKGROUNDCOLOR);
     }
     seconds = seconds - 1;
   }
@@ -398,7 +400,7 @@ void subtractTime() {
     if (minutes == 0) {
       if (seconds == 0) {
         if (!spraying) {
-          tft.fillRect(0, 0, 300, 50, BLUE);
+          tft.fillRect(0, 0, 300, 50, BACKGROUNDCOLOR);
         }
         if (answered2) {
           tft.setTextSize(2);
@@ -423,7 +425,7 @@ void subtractTime() {
       }
     }
     if (!spraying) {
-      tft.fillRect(0, 19, 300, 18, BLUE);
+      tft.fillRect(0, 19, 300, 18, BACKGROUNDCOLOR);
     }
   }
   if (!spraying) {
@@ -451,7 +453,7 @@ void endConfig() {
   tft.setCursor(50, 175);
   tft.println("is complete!");
   delay(4000);
-  tft.fillScreen(BLUE);
+  tft.fillScreen(BACKGROUNDCOLOR);
   if (answered2) {
     hours = assignedHours;
   }
@@ -502,7 +504,7 @@ void buttonPress() {
       answered4 = false;
 
       reconfiguring = true;
-      tft.fillScreen(BLUE);
+      tft.fillScreen(BACKGROUNDCOLOR);
       configSystem();
     }
     if (p.x > 520 && p.x < 660 && p.y > 295 && p.y < 705) {
@@ -510,7 +512,7 @@ void buttonPress() {
       pinMode(XM, OUTPUT);
       pinMode(YP, OUTPUT);
       spraying = true;
-      tft.fillRect(0, 0, 300, 50, BLUE);
+      tft.fillRect(0, 0, 300, 50, BACKGROUNDCOLOR);
       tft.setTextSize(2);
       tft.setCursor(10, 20);
       tft.print("Spraying Enclosure");
@@ -525,7 +527,7 @@ void buttonPress() {
           spraying = false;
         }
       }
-      tft.fillRect(0, 15, 300, 30, BLUE);
+      tft.fillRect(0, 15, 300, 30, BACKGROUNDCOLOR);
       tft.setCursor(20, 1);
       tft.print("Time Until Next");
       tft.setCursor(5, 21);
@@ -578,7 +580,7 @@ void config2()
 
         answered3 = true;
 
-        tft.fillScreen(BLUE);
+        tft.fillScreen(BACKGROUNDCOLOR);
 
         endConfig();
       }
@@ -586,7 +588,7 @@ void config2()
         pinMode(XM, OUTPUT);
         pinMode(YP, OUTPUT);
 
-        tft.fillScreen(BLUE);
+        tft.fillScreen(BACKGROUNDCOLOR);
 
         answered3 = true;
 
@@ -687,7 +689,7 @@ void config2()
               assignedWait = 30000;
             }
             if (answered4) {
-             tft.fillScreen(BLUE);
+             tft.fillScreen(BACKGROUNDCOLOR);
              endConfig();
             }
           }
