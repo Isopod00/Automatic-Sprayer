@@ -48,6 +48,7 @@ int status = WL_IDLE_STATUS;
 #define WHITE   0xFFFF
 
 #define BACKGROUNDCOLOR CYAN // Custom the background color of the display!
+#define TEXTCOLOR BLACK // Custom the color of text that is displayed!
 
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
@@ -168,7 +169,7 @@ void boot() {
   tft.fillScreen(BACKGROUNDCOLOR);
   tft.setRotation(2);
   tft.setCursor(20, 0);
-  tft.setTextColor(WHITE);
+  tft.setTextColor(TEXTCOLOR);
   tft.setTextSize(2);
   tft.println("Automatic Sprayer");
   tft.setCursor(100, 20);
@@ -207,15 +208,8 @@ void configSystem() {
   tft.println("Would you like it");
   tft.setCursor(20, 120);
   tft.println("to stay that way?");
-  tft.fillRect(20, 210, 80, 50, BLACK);
-  tft.drawRect(20, 210, 80, 50, WHITE);
-  tft.setCursor(25, 220);
-  tft.setTextSize(4);
-  tft.print("Yes");
-  tft.fillRect(150, 210, 80, 50, BLACK);
-  tft.drawRect(150, 210, 80, 50, WHITE);
-  tft.setCursor(170, 220);
-  tft.print("NO");
+  drawButton(20, 210, 80, 50, 4, "Yes");
+  drawButton(140, 210, 60, 50, 4, "No");
   while (!answered1) {
     // Check for WiFi OTA updates
     ArduinoOTA.poll();
@@ -254,31 +248,12 @@ void configSystem() {
         tft.setCursor(10, 40);
         tft.println("spray interval to?");
 
-        tft.fillRect(15, 120, 50, 50, BLACK);
-        tft.drawRect(15, 120, 50, 50, WHITE);
-        tft.setCursor(30, 128);
-        tft.setTextSize(4);
-        tft.print("2");
-        tft.fillRect(95, 120, 50, 50, BLACK);
-        tft.drawRect(95, 120, 50, 50, WHITE);
-        tft.setCursor(110, 128);
-        tft.print("4");
-        tft.fillRect(175, 120, 50, 50, BLACK);
-        tft.drawRect(175, 120, 50, 50, WHITE);
-        tft.setCursor(190, 128);
-        tft.print("6");
-        tft.fillRect(15, 200, 50, 50, BLACK);
-        tft.drawRect(15, 200, 50, 50, WHITE);
-        tft.setCursor(30, 208);
-        tft.print("8");
-        tft.fillRect(95, 200, 50, 50, BLACK);
-        tft.drawRect(95, 200, 50, 50, WHITE);
-        tft.setCursor(96, 208);
-        tft.print("10");
-        tft.fillRect(175, 200, 50, 50, BLACK);
-        tft.drawRect(175, 200, 50, 50, WHITE);
-        tft.setCursor(176, 208);
-        tft.print("12");
+        drawButton(15, 120, 50, 50, 4, "2");
+        drawButton(95, 120, 50, 50, 4, "4");
+        drawButton(175, 120, 50, 50, 4, "6");
+        drawButton(15, 200, 50, 50, 4, "8");
+        drawButton(95, 200, 50, 50, 4, "10");
+        drawButton(175, 200, 50, 50, 4, "12");
 
         while (!answered2) {
           // Check for WiFi OTA updates
@@ -467,17 +442,19 @@ void endConfig() {
   tft.print(minutes);
   tft.print(" : ");
   tft.print(seconds);
-  tft.fillRect(50, 112, 130, 50, BLACK);
-  tft.drawRect(50, 112, 130, 50, WHITE);
-  tft.setCursor(55, 120);
-  tft.setTextSize(4);
-  tft.print("Spray");
-  tft.fillRect(9, 252, 225, 35, BLACK);
-  tft.drawRect(9, 252, 225, 35, WHITE);
-  tft.setCursor(15, 260);
-  tft.setTextSize(2);
-  tft.print("Reconfigure System");
+  drawButton(50, 112, 130, 50, 4, "Spray");
+  drawButton(9, 252, 225, 35, 2, "Reconfigure System");
   reconfiguring = false;
+}
+
+void drawButton(int x1, int y1, int width, int height, int textSize, String text) {
+  tft.setTextColor(WHITE);
+  tft.fillRect(x1, y1, width, height, BLACK);
+  tft.drawRect(x1, y1, width, height, WHITE);
+  tft.setCursor(x1 + 5, y1 + 10);
+  tft.setTextSize(textSize);
+  tft.print(text);
+  tft.setTextColor(TEXTCOLOR);
 }
 
 void buttonPress() {
@@ -551,15 +528,8 @@ void config2()
   tft.println("Would you like it ");
   tft.setCursor(15, 100);
   tft.println("to stay that way?");
-  tft.fillRect(20, 210, 80, 50, BLACK);
-  tft.drawRect(20, 210, 80, 50, WHITE);
-  tft.setCursor(25, 220);
-  tft.setTextSize(4);
-  tft.print("Yes");
-  tft.fillRect(150, 210, 80, 50, BLACK);
-  tft.drawRect(150, 210, 80, 50, WHITE);
-  tft.setCursor(170, 220);
-  tft.print("NO");
+  drawButton(20, 210, 80, 50, 4, "Yes");
+  drawButton(140, 210, 80, 50, 4, "No");
 
   while (!answered3) {
     // Check for WiFi OTA updates
@@ -602,31 +572,12 @@ void config2()
         tft.setCursor(45, 60);
         tft.println("duration to?");
 
-         tft.fillRect(15, 120, 50, 50, BLACK);
-        tft.drawRect(15, 120, 50, 50, WHITE);
-        tft.setCursor(30, 128);
-        tft.setTextSize(4);
-        tft.print("5");
-        tft.fillRect(95, 120, 50, 50, BLACK);
-        tft.drawRect(95, 120, 50, 50, WHITE);
-        tft.setCursor(96, 128);
-        tft.print("10");
-        tft.fillRect(175, 120, 50, 50, BLACK);
-        tft.drawRect(175, 120, 50, 50, WHITE);
-        tft.setCursor(176, 128);
-        tft.print("15");
-        tft.fillRect(14, 200, 51, 50, BLACK);
-        tft.drawRect(14, 200, 51, 50, WHITE);
-        tft.setCursor(17, 208);
-        tft.print("20");
-        tft.fillRect(94, 200, 51, 50, BLACK);
-        tft.drawRect(94, 200, 51, 50, WHITE);
-        tft.setCursor(97, 208);
-        tft.print("25");
-        tft.fillRect(174, 200, 51, 50, BLACK);
-        tft.drawRect(174, 200, 51, 50, WHITE);
-        tft.setCursor(177, 208);
-        tft.print("30");
+        drawButton(15, 120, 50, 50, 4, "5");
+        drawButton(95, 120, 50, 50, 4, "10");
+        drawButton(175, 120, 50, 50, 4, "15");
+        drawButton(14, 200, 51, 50, 4, "20");
+        drawButton(94, 200, 51, 50, 4, "25");
+        drawButton(174, 200, 51, 50, 4, "30");
 
         while (!answered4) {
           // Check for WiFi OTA updates
