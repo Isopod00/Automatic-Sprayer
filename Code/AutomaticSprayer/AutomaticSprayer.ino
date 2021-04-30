@@ -112,8 +112,7 @@ void setup() {
 }
 
 void loop() {
-  // Check for WiFi OTA updates
-  ArduinoOTA.poll();
+  ArduinoOTA.poll(); //Check for WiFi OTA updates
      
   if (!reconfiguring) {
     buttonPress();
@@ -168,12 +167,12 @@ void printWifiStatus() {
 void boot() {
   tft.fillScreen(BACKGROUNDCOLOR);
   tft.setRotation(2);
-  tft.setCursor(20, 0);
+  tft.setCursor(20, 2);
   tft.setTextColor(TEXTCOLOR);
   tft.setTextSize(2);
   tft.println("Automatic Sprayer");
-  tft.setCursor(100, 20);
-  tft.println("v2.5");
+  tft.setCursor(100, 22);
+  tft.println("v3.0");
   tft.setCursor(80, 280);
   tft.println("Made by");
   tft.setCursor(40, 300);
@@ -182,37 +181,25 @@ void boot() {
   tft.setTextSize(4);
   tft.println("Welcome!");
   delay(4000);
-  tft.fillScreen(BACKGROUNDCOLOR);
 }
 
 void configSystem() {
-  tft.setCursor(25, 100);
-  tft.setTextSize(3);
-  tft.println("Please take");
-  tft.setCursor(20, 125);
-  tft.println("a moment to");
-  tft.setCursor(35, 150);
-  tft.println("configure");
-  tft.setCursor(20, 175);
-  tft.println("your system!");
-  delay(4000);
   tft.fillScreen(BACKGROUNDCOLOR);
-  tft.setCursor(20, 0);
+  tft.setCursor(20, 2);
   tft.setTextSize(2);
   tft.println("The default spray");
-  tft.setCursor(15, 20);
+  tft.setCursor(15, 22);
   tft.println("interval is every");
-  tft.setCursor(50, 40);
+  tft.setCursor(50, 42);
   tft.println("eight hours.");
-  tft.setCursor(20, 100);
+  tft.setCursor(20, 102);
   tft.println("Would you like it");
-  tft.setCursor(20, 120);
+  tft.setCursor(20, 122);
   tft.println("to stay that way?");
-  drawButton(20, 210, 80, 50, 4, "Yes");
-  drawButton(140, 210, 60, 50, 4, "No");
+  drawButton(20, 210, 80, 50, 4, "Yes", 0);
+  drawButton(140, 210, 80, 50, 4, "No", 15);
   while (!answered1) {
-    // Check for WiFi OTA updates
-    ArduinoOTA.poll();
+    ArduinoOTA.poll(); //Check for WiFi OTA updates
   
     TSPoint p = ts.getPoint();
 
@@ -248,16 +235,15 @@ void configSystem() {
         tft.setCursor(10, 40);
         tft.println("spray interval to?");
 
-        drawButton(15, 120, 50, 50, 4, "2");
-        drawButton(95, 120, 50, 50, 4, "4");
-        drawButton(175, 120, 50, 50, 4, "6");
-        drawButton(15, 200, 50, 50, 4, "8");
-        drawButton(95, 200, 50, 50, 4, "10");
-        drawButton(175, 200, 50, 50, 4, "12");
+        drawButton(15, 120, 50, 50, 4, "2", 8);
+        drawButton(95, 120, 50, 50, 4, "4", 8);
+        drawButton(175, 120, 50, 50, 4, "6", 8);
+        drawButton(15, 200, 50, 50, 4, "8", 8);
+        drawButton(95, 200, 50, 50, 4, "10", -3);
+        drawButton(175, 200, 50, 50, 4, "12", -3);
 
         while (!answered2) {
-          // Check for WiFi OTA updates
-          ArduinoOTA.poll();
+          ArduinoOTA.poll(); //Check for WiFi OTA updates
   
           TSPoint p = ts.getPoint();
 
@@ -422,17 +408,11 @@ void endConfig() {
   if (answered4) {
     wait = assignedWait;
   }
-  tft.setCursor(45, 155);
-  tft.setTextSize(2);
-  tft.println("Configuration");
-  tft.setCursor(50, 175);
-  tft.println("is complete!");
-  delay(4000);
-  tft.fillScreen(BACKGROUNDCOLOR);
   if (answered2) {
     hours = assignedHours;
   }
-  tft.setRotation(2);
+  tft.fillScreen(BACKGROUNDCOLOR);
+  tft.setTextSize(2);
   tft.setCursor(20, 1);
   tft.print("Time Until Next");
   tft.setCursor(5, 21);
@@ -442,16 +422,16 @@ void endConfig() {
   tft.print(minutes);
   tft.print(" : ");
   tft.print(seconds);
-  drawButton(50, 112, 130, 50, 4, "Spray");
-  drawButton(9, 252, 225, 35, 2, "Reconfigure System");
+  drawButton(50, 112, 130, 50, 4, "Spray", 0);
+  drawButton(9, 252, 225, 35, 2, "Reconfigure System", 0);
   reconfiguring = false;
 }
 
-void drawButton(int x1, int y1, int width, int height, int textSize, String text) {
+void drawButton(int x1, int y1, int width, int height, int textSize, String text, int textOffset) {
   tft.setTextColor(WHITE);
   tft.fillRect(x1, y1, width, height, BLACK);
   tft.drawRect(x1, y1, width, height, WHITE);
-  tft.setCursor(x1 + 5, y1 + 10);
+  tft.setCursor(x1 + 5 + textOffset, y1 + 10);
   tft.setTextSize(textSize);
   tft.print(text);
   tft.setTextColor(TEXTCOLOR);
@@ -481,7 +461,6 @@ void buttonPress() {
       answered4 = false;
 
       reconfiguring = true;
-      tft.fillScreen(BACKGROUNDCOLOR);
       configSystem();
     }
     if (p.x > 520 && p.x < 660 && p.y > 295 && p.y < 705) {
@@ -517,23 +496,22 @@ void buttonPress() {
 
 void config2()
 {
-  tft.setCursor(20, 0);
+  tft.setCursor(20, 2);
   tft.setTextSize(2);
   tft.println("The default spray");
-  tft.setCursor(5, 20);
+  tft.setCursor(5, 22);
   tft.println("duration is fifteen");
-  tft.setCursor(80, 40);
+  tft.setCursor(80, 42);
   tft.println("seconds.");
-  tft.setCursor(15, 80);
+  tft.setCursor(15, 102);
   tft.println("Would you like it ");
-  tft.setCursor(15, 100);
+  tft.setCursor(15, 122);
   tft.println("to stay that way?");
-  drawButton(20, 210, 80, 50, 4, "Yes");
-  drawButton(140, 210, 80, 50, 4, "No");
+  drawButton(20, 210, 80, 50, 4, "Yes", 0);
+  drawButton(140, 210, 80, 50, 4, "No", 15);
 
   while (!answered3) {
-    // Check for WiFi OTA updates
-    ArduinoOTA.poll();
+    ArduinoOTA.poll(); //Check for WiFi OTA updates
   
     TSPoint p = ts.getPoint();
 
@@ -549,9 +527,6 @@ void config2()
         pinMode(YP, OUTPUT);
 
         answered3 = true;
-
-        tft.fillScreen(BACKGROUNDCOLOR);
-
         endConfig();
       }
       else if (p.x > 255 && p.x < 385 && p.y > 610 && p.y < 860) {
@@ -572,16 +547,15 @@ void config2()
         tft.setCursor(45, 60);
         tft.println("duration to?");
 
-        drawButton(15, 120, 50, 50, 4, "5");
-        drawButton(95, 120, 50, 50, 4, "10");
-        drawButton(175, 120, 50, 50, 4, "15");
-        drawButton(14, 200, 51, 50, 4, "20");
-        drawButton(94, 200, 51, 50, 4, "25");
-        drawButton(174, 200, 51, 50, 4, "30");
+        drawButton(15, 120, 55, 50, 4, "5", 10);
+        drawButton(95, 120, 55, 50, 4, "10", 0);
+        drawButton(175, 120, 55, 50, 4, "15", 0);
+        drawButton(14, 200, 55, 50, 4, "20", 0);
+        drawButton(94, 200, 55, 50, 4, "25", 0);
+        drawButton(174, 200, 55, 50, 4, "30", 0);
 
         while (!answered4) {
-          // Check for WiFi OTA updates
-          ArduinoOTA.poll();
+          ArduinoOTA.poll(); //Check for WiFi OTA updates
   
           TSPoint p = ts.getPoint();
 
@@ -640,7 +614,6 @@ void config2()
               assignedWait = 30000;
             }
             if (answered4) {
-             tft.fillScreen(BACKGROUNDCOLOR);
              endConfig();
             }
           }
