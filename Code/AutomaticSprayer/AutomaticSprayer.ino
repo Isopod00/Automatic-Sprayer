@@ -244,51 +244,31 @@ void configSystem() {
           TSPoint p = ts.getPoint();
 
           if (p.z > ts.pressureThreshhold) {
+            //This is important because the tft and touchscreen libraries are sharing pins
+            pinMode(XM, OUTPUT);
+            pinMode(YP, OUTPUT);
+            
             if (p.x > 520 && p.x < 640 && p.y > 180 && p.y < 295) {
-              //This is important because the tft and touchscreen libraries are sharing pins
-              pinMode(XM, OUTPUT);
-              pinMode(YP, OUTPUT);
-
               answered2 = true;
               assignedHours = 2;
             }
             else if (p.x > 520 && p.x < 640 && p.y > 445 && p.y < 580) {
-              //This is important because the tft and touchscreen libraries are sharing pins
-              pinMode(XM, OUTPUT);
-              pinMode(YP, OUTPUT);
-
               answered2 = true;
               assignedHours = 4;
             }
             else if (p.x > 520 && p.x < 640 && p.y > 700 && p.y < 850) {
-              //This is important because the tft and touchscreen libraries are sharing pins
-              pinMode(XM, OUTPUT);
-              pinMode(YP, OUTPUT);
-
               answered2 = true;
               assignedHours = 6;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 180 && p.y < 295) {
-              //This is important because the tft and touchscreen libraries are sharing pins
-              pinMode(XM, OUTPUT);
-              pinMode(YP, OUTPUT);
-
               answered2 = true;
               assignedHours = 8;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 445 && p.y < 580) {
-              //This is important because the tft and touchscreen libraries are sharing pins
-              pinMode(XM, OUTPUT);
-              pinMode(YP, OUTPUT);
-
               answered2 = true;
               assignedHours = 10;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 700 && p.y < 850) {
-              //This is important because the tft and touchscreen libraries are sharing pins
-              pinMode(XM, OUTPUT);
-              pinMode(YP, OUTPUT);
-
               answered2 = true;
               assignedHours = 12;
             }
@@ -432,11 +412,11 @@ void buttonPress() {
   TSPoint p = ts.getPoint();
 
   if (p.z > ts.pressureThreshhold) {
+    //This is important because the tft and touchscreen libraries are sharing pins
+    pinMode(XM, OUTPUT);
+    pinMode(YP, OUTPUT);
+    
     if (p.x > 200 && p.x < 250 && p.y > 201 && p.y < 843) {
-      //This is important because the tft and touchscreen libraries are sharing pins
-      pinMode(XM, OUTPUT);
-      pinMode(YP, OUTPUT);
-
       hours = 8;
       minutes = 0;
       seconds = 0;
@@ -450,9 +430,6 @@ void buttonPress() {
       configSystem();
     }
     if (p.x > 520 && p.x < 660 && p.y > 295 && p.y < 705) {
-      //This is important because the tft and touchscreen libraries are sharing pins
-      pinMode(XM, OUTPUT);
-      pinMode(YP, OUTPUT);
       spraying = true;
       tft.fillRect(0, 0, 300, 50, BACKGROUNDCOLOR);
       tft.setTextSize(2);
@@ -476,6 +453,9 @@ void buttonPress() {
       tft.print("Spray: ");
     }
   }
+  //This is important because the tft and touchscreen libraries are sharing pins
+  pinMode(XM, OUTPUT);
+  pinMode(YP, OUTPUT);
 }
 
 void config2()
