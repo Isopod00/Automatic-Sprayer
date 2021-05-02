@@ -205,7 +205,7 @@ void configSystem() {
 
     if (p.z > ts.pressureThreshhold) {
       if (p.x > 280 && p.x < 400 && p.y > 185 && p.y < 420) {
-        //This is important, because the libraries are sharing pins
+        //This is important because the tft and touchscreen libraries are sharing pins
         pinMode(XM, OUTPUT);
         pinMode(YP, OUTPUT);
 
@@ -215,7 +215,7 @@ void configSystem() {
         config2();
       }
       else if (p.x > 255 && p.x < 385 && p.y > 610 && p.y < 860) {
-        //This is important, because the libraries are sharing pins
+        //This is important because the tft and touchscreen libraries are sharing pins
         pinMode(XM, OUTPUT);
         pinMode(YP, OUTPUT);
 
@@ -245,7 +245,7 @@ void configSystem() {
 
           if (p.z > ts.pressureThreshhold) {
             if (p.x > 520 && p.x < 640 && p.y > 180 && p.y < 295) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -253,7 +253,7 @@ void configSystem() {
               assignedHours = 2;
             }
             else if (p.x > 520 && p.x < 640 && p.y > 445 && p.y < 580) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -261,7 +261,7 @@ void configSystem() {
               assignedHours = 4;
             }
             else if (p.x > 520 && p.x < 640 && p.y > 700 && p.y < 850) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -269,7 +269,7 @@ void configSystem() {
               assignedHours = 6;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 180 && p.y < 295) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -277,7 +277,7 @@ void configSystem() {
               assignedHours = 8;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 445 && p.y < 580) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -285,7 +285,7 @@ void configSystem() {
               assignedHours = 10;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 700 && p.y < 850) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -433,7 +433,7 @@ void buttonPress() {
 
   if (p.z > ts.pressureThreshhold) {
     if (p.x > 200 && p.x < 250 && p.y > 201 && p.y < 843) {
-      //This is important, because the libraries are sharing pins
+      //This is important because the tft and touchscreen libraries are sharing pins
       pinMode(XM, OUTPUT);
       pinMode(YP, OUTPUT);
 
@@ -450,7 +450,7 @@ void buttonPress() {
       configSystem();
     }
     if (p.x > 520 && p.x < 660 && p.y > 295 && p.y < 705) {
-      //This is important, because the libraries are sharing pins
+      //This is important because the tft and touchscreen libraries are sharing pins
       pinMode(XM, OUTPUT);
       pinMode(YP, OUTPUT);
       spraying = true;
@@ -501,7 +501,7 @@ void config2()
 
     if (p.z > ts.pressureThreshhold) {
       if (p.x > 280 && p.x < 400 && p.y > 185 && p.y < 420) {
-        //This is important, because the libraries are sharing pins
+        //This is important because the tft and touchscreen libraries are sharing pins
         pinMode(XM, OUTPUT);
         pinMode(YP, OUTPUT);
 
@@ -509,7 +509,7 @@ void config2()
         endConfig();
       }
       else if (p.x > 255 && p.x < 385 && p.y > 610 && p.y < 860) {
-        //This is important, because the libraries are sharing pins
+        //This is important because the tft and touchscreen libraries are sharing pins
         pinMode(XM, OUTPUT);
         pinMode(YP, OUTPUT);
 
@@ -541,7 +541,7 @@ void config2()
 
           if (p.z > ts.pressureThreshhold) {
             if (p.x > 520 && p.x < 640 && p.y > 180 && p.y < 295) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -549,7 +549,7 @@ void config2()
               assignedWait = 5000;
             }
             else if (p.x > 520 && p.x < 640 && p.y > 445 && p.y < 580) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -557,7 +557,7 @@ void config2()
               assignedWait = 10000;
             }
             else if (p.x > 520 && p.x < 640 && p.y > 700 && p.y < 850) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -565,7 +565,7 @@ void config2()
               assignedWait = 15000;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 180 && p.y < 295) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -573,7 +573,7 @@ void config2()
               assignedWait = 20000;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 445 && p.y < 580) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
@@ -581,7 +581,7 @@ void config2()
               assignedWait = 25000;
             }
             else if (p.x > 285 && p.x < 430 && p.y > 700 && p.y < 850) {
-              //This is important, because the libraries are sharing pins
+              //This is important because the tft and touchscreen libraries are sharing pins
               pinMode(XM, OUTPUT);
               pinMode(YP, OUTPUT);
 
