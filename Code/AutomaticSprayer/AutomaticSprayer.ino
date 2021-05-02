@@ -416,7 +416,7 @@ void buttonPress() {
     pinMode(XM, OUTPUT);
     pinMode(YP, OUTPUT);
     
-    if (p.x > 200 && p.x < 250 && p.y > 201 && p.y < 843) {
+    if (p.x > 190 && p.x < 260 && p.y > 180 && p.y < 860) {
       hours = 8;
       minutes = 0;
       seconds = 0;
