@@ -212,16 +212,16 @@ void configSystem() {
         answered1 = true;
 
         tft.fillScreen(BACKGROUNDCOLOR);
-
         config2();
       }
       else if (p.x > 255 && p.x < 385 && p.y > 610 && p.y < 860) {
+        //This is important, because the libraries are sharing pins
         pinMode(XM, OUTPUT);
         pinMode(YP, OUTPUT);
 
-        tft.fillScreen(BACKGROUNDCOLOR);
-
         answered1 = true;
+
+        tft.fillScreen(BACKGROUNDCOLOR);
 
         tft.setCursor(0, 0);
         tft.setTextSize(2);
@@ -476,8 +476,6 @@ void buttonPress() {
       tft.print("Spray: ");
     }
   }
-  pinMode(XM, OUTPUT);
-  pinMode(YP, OUTPUT);
 }
 
 void config2()
@@ -511,6 +509,7 @@ void config2()
         endConfig();
       }
       else if (p.x > 255 && p.x < 385 && p.y > 610 && p.y < 860) {
+        //This is important, because the libraries are sharing pins
         pinMode(XM, OUTPUT);
         pinMode(YP, OUTPUT);
 
