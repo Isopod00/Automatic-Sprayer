@@ -394,7 +394,7 @@ void endConfig() {
   tft.print(" : ");
   tft.print(seconds);
   drawButton(50, 112, 130, 50, 4, "Spray", 0);
-  drawButton(9, 252, 225, 35, 2, "Reconfigure System", 0);
+  drawButton(15, 250, 210, 40, 3, "Reconfigure", 0);
   reconfiguring = false;
 }
 
