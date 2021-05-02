@@ -204,10 +204,6 @@ void configSystem() {
     TSPoint p = ts.getPoint();
 
     if (p.z > ts.pressureThreshhold) {
-      Serial.print("X = "); Serial.print(p.x);
-      Serial.print("\tY = "); Serial.print(p.y);
-      Serial.print("\n");
-
       if (p.x > 280 && p.x < 400 && p.y > 185 && p.y < 420) {
         //This is important, because the libraries are sharing pins
         pinMode(XM, OUTPUT);
@@ -248,11 +244,6 @@ void configSystem() {
           TSPoint p = ts.getPoint();
 
           if (p.z > ts.pressureThreshhold) {
-
-            Serial.print("X = "); Serial.print(p.x);
-            Serial.print("\tY = "); Serial.print(p.y);
-            Serial.print("\n");
-
             if (p.x > 520 && p.x < 640 && p.y > 180 && p.y < 295) {
               //This is important, because the libraries are sharing pins
               pinMode(XM, OUTPUT);
@@ -441,11 +432,6 @@ void buttonPress() {
   TSPoint p = ts.getPoint();
 
   if (p.z > ts.pressureThreshhold) {
-
-    Serial.print("X = "); Serial.print(p.x);
-    Serial.print("\tY = "); Serial.print(p.y);
-    Serial.print("\n");
-
     if (p.x > 200 && p.x < 250 && p.y > 201 && p.y < 843) {
       //This is important, because the libraries are sharing pins
       pinMode(XM, OUTPUT);
@@ -516,11 +502,6 @@ void config2()
     TSPoint p = ts.getPoint();
 
     if (p.z > ts.pressureThreshhold) {
-
-      Serial.print("X = "); Serial.print(p.x);
-      Serial.print("\tY = "); Serial.print(p.y);
-      Serial.print("\n");
-
       if (p.x > 280 && p.x < 400 && p.y > 185 && p.y < 420) {
         //This is important, because the libraries are sharing pins
         pinMode(XM, OUTPUT);
@@ -560,11 +541,6 @@ void config2()
           TSPoint p = ts.getPoint();
 
           if (p.z > ts.pressureThreshhold) {
-
-            Serial.print("X = "); Serial.print(p.x);
-            Serial.print("\tY = "); Serial.print(p.y);
-            Serial.print("\n");
-
             if (p.x > 520 && p.x < 640 && p.y > 180 && p.y < 295) {
               //This is important, because the libraries are sharing pins
               pinMode(XM, OUTPUT);
