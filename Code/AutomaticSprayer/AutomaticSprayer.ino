@@ -67,8 +67,8 @@ int relay = 45;
 bool reconfiguring = true;
 bool spraying = false;
 
-int assignedHours;
-int assignedWait;
+int assignedHours = 8;
+int assignedWait = 15000;
 
 bool answered1 = false;
 bool answered2 = false;
@@ -184,6 +184,9 @@ void boot() {
 }
 
 void configSystem() {
+  assignedHours = 8;
+  assignedWait = 15000;
+
   tft.fillScreen(BACKGROUNDCOLOR);
   tft.setCursor(20, 2);
   tft.setTextSize(2);
@@ -290,18 +293,11 @@ void subtractTime() {
         if (!spraying) {
           tft.fillRect(72, 19, 250, 18, BACKGROUNDCOLOR);
         }
-        if (answered2) {
-          digitalWrite(relay, HIGH);
-          delay(wait);
-          digitalWrite(relay, LOW);
-          hours = assignedHours;
-        }
-        else {
-          digitalWrite(relay, HIGH);
-          delay(wait);
-          digitalWrite(relay, LOW);
-          hours = 8;
-        }
+        digitalWrite(relay, HIGH);
+        delay(wait);
+        digitalWrite(relay, LOW);
+
+        hours = assignedHours;
         minutes = 0;
         seconds = 0;
       }
@@ -334,24 +330,15 @@ void subtractTime() {
         if (!spraying) {
           tft.fillRect(0, 0, 300, 50, BACKGROUNDCOLOR);
         }
-        if (answered2) {
-          tft.setTextSize(2);
-          tft.setCursor(10, 20);
-          tft.print("Spraying Enclosure");
-          digitalWrite(relay, HIGH);
-          delay(wait);
-          digitalWrite(relay, LOW);
-          hours = assignedHours;
-        }
-        else {
-          tft.setTextSize(2);
-          tft.setCursor(10, 20);
-          tft.print("Spraying Enclosure");
-          digitalWrite(relay, HIGH);
-          delay(wait);
-          digitalWrite(relay, LOW);
-          hours = 8;
-        }
+        tft.setTextSize(2);
+        tft.setCursor(10, 20);
+        tft.print("Spraying Enclosure");
+
+        digitalWrite(relay, HIGH);
+        delay(wait);
+        digitalWrite(relay, LOW);
+
+        hours = assignedHours;
         minutes = 0;
         seconds = 0;
       }
@@ -376,12 +363,8 @@ void subtractTime() {
 }
 
 void endConfig() {
-  if (answered4) {
-    wait = assignedWait;
-  }
-  if (answered2) {
-    hours = assignedHours;
-  }
+  wait = assignedWait;
+  hours = assignedHours;
   tft.fillScreen(BACKGROUNDCOLOR);
   tft.setTextSize(2);
   tft.setCursor(20, 1);
