@@ -81,9 +81,8 @@ void setup() {
   //Configure pins for the Adafruit ATWINC1500 Breakout
   WiFi.setPins(35,37,39);
 
-  // Manually reset the WiFi board //
+  // Manually enable the WiFi board //
   pinMode(wifiEnable, OUTPUT);
-  digitalWrite(wifiEnable, LOW);
   digitalWrite(wifiEnable, HIGH);
 
   connectToNetwork(); // Connect to home WiFi network
@@ -112,9 +111,8 @@ void setup() {
 }
 
 void loop() {
-  ArduinoOTA.poll(); //Check for WiFi OTA updates
-     
-  if (!reconfiguring) {
+ArduinoOTA.poll(); //Check for WiFi OTA updates
+if (!reconfiguring) {
     buttonPress();
     delay(8);
     if (time == 125) {
@@ -128,10 +126,9 @@ void loop() {
 }
 
 void connectToNetwork() {
-  // Check for the presence of the WiFi board //
-  if (WiFi.status() == WL_NO_SHIELD) {
+  // Wait for the WiFi board to be connected //
+  while (WiFi.status() == WL_NO_SHIELD) {
     Serial.println("WiFi board is not present");
-    while (true); // Don't continue
   }
 
   // Attempt to connect to Wifi network //
@@ -143,25 +140,6 @@ void connectToNetwork() {
 
   // start the WiFi OTA library with internal (flash) based storage
   ArduinoOTA.begin(WiFi.localIP(), "Arduino", "password", InternalStorage);
-
-  printWifiStatus(); // Should be connected now, so print out the status
-}
-
-void printWifiStatus() {
-  // Print the SSID of the network the board is connected to //
-  Serial.print("SSID: ");
-  Serial.println(WiFi.SSID());
-
-  // Print the WiFi board's IP address //
-  IPAddress ip = WiFi.localIP();
-  Serial.print("IP Address: ");
-  Serial.println(ip);
-
-  // Print the received signal strength //
-  long rssi = WiFi.RSSI();
-  Serial.print("signal strength (RSSI): ");
-  Serial.print(rssi);
-  Serial.println(" dBm");
 }
 
 void boot() {
