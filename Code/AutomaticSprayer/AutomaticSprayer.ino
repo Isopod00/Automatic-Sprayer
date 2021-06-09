@@ -111,8 +111,14 @@ void setup() {
 }
 
 void loop() {
-ArduinoOTA.poll(); //Check for WiFi OTA updates
-if (!reconfiguring) {
+  if (status == WL_CONNECTED) { 
+    ArduinoOTA.poll(); //Check for WiFi OTA updates }
+  }
+  else {
+    connectToNetwork(); // Connect to home WiFi network
+  }
+  
+  if (!reconfiguring) {
     buttonPress();
     delay(8);
     if (time == 125) {
@@ -126,12 +132,10 @@ if (!reconfiguring) {
 }
 
 void connectToNetwork() {
-  // Wait for the WiFi board to be connected //
-  while (WiFi.status() == WL_NO_SHIELD) {
-    Serial.println("WiFi board is not present");
-  }
-
-  // Attempt to connect to Wifi network //
+  // Check if the WiFi board is connected //
+  if (WiFi.status() != WL_NO_SHIELD) {
+    
+    // Attempt to connect to Wifi network //
   while (status != WL_CONNECTED) {
     Serial.print("Attempting to connect to SSID: ");
     Serial.println(ssid);
@@ -140,8 +144,9 @@ void connectToNetwork() {
 
   // start the WiFi OTA library with internal (flash) based storage
   ArduinoOTA.begin(WiFi.localIP(), "Arduino", "password", InternalStorage);
+  }
 }
-
+  
 void boot() {
   tft.fillScreen(BACKGROUNDCOLOR);
   tft.setRotation(2);
@@ -180,7 +185,9 @@ void configSystem() {
   drawButton(20, 210, 80, 50, 4, "Yes", 0);
   drawButton(140, 210, 80, 50, 4, "No", 15);
   while (!answered1) {
-    ArduinoOTA.poll(); //Check for WiFi OTA updates
+    if (status == WL_CONNECTED) { 
+      ArduinoOTA.poll(); //Check for WiFi OTA updates
+    }
   
     TSPoint p = ts.getPoint();
 
@@ -220,7 +227,9 @@ void configSystem() {
         drawButton(175, 200, 50, 50, 4, "12", -3);
 
         while (!answered2) {
-          ArduinoOTA.poll(); //Check for WiFi OTA updates
+          if (status == WL_CONNECTED) { 
+            ArduinoOTA.poll(); //Check for WiFi OTA updates
+          }
   
           TSPoint p = ts.getPoint();
 
@@ -436,7 +445,9 @@ void config2()
   drawButton(140, 210, 80, 50, 4, "No", 15);
 
   while (!answered3) {
-    ArduinoOTA.poll(); //Check for WiFi OTA updates
+    if (status == WL_CONNECTED) { 
+      ArduinoOTA.poll(); //Check for WiFi OTA updates
+    }
   
     TSPoint p = ts.getPoint();
 
@@ -476,7 +487,9 @@ void config2()
         drawButton(174, 200, 55, 50, 4, "30", 0);
 
         while (!answered4) {
-          ArduinoOTA.poll(); //Check for WiFi OTA updates
+          if (status == WL_CONNECTED) { 
+            ArduinoOTA.poll(); //Check for WiFi OTA updates
+          }
   
           TSPoint p = ts.getPoint();
 
