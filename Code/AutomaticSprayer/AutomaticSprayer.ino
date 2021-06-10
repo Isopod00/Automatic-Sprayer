@@ -61,7 +61,8 @@ int waitTime = 0;
 int wait = 15000;
 
 //int wifiEnable = 41;
-int relay = 45;
+int motor = 45;
+int motorPin2 = 46;
 
 bool reconfiguring = true;
 bool spraying = false;
@@ -88,8 +89,10 @@ void setup() {
 
   tft.reset();
 
-  pinMode(relay, OUTPUT);
-  digitalWrite(relay, LOW);
+  pinMode(motor, OUTPUT);
+  pinMode(motorPin2, OUTPUT);
+
+  digitalWrite(motorPin2, LOW);
 
   uint16_t identifier = tft.readID();
   if (identifier == 0x9325) {
@@ -276,9 +279,9 @@ void subtractTime() {
         if (!spraying) {
           tft.fillRect(72, 19, 250, 18, BACKGROUNDCOLOR);
         }
-        digitalWrite(relay, HIGH);
+        digitalWrite(motor, HIGH);
         delay(wait);
-        digitalWrite(relay, LOW);
+        digitalWrite(motor, LOW);
 
         hours = assignedHours;
         minutes = 0;
@@ -317,9 +320,9 @@ void subtractTime() {
         tft.setCursor(10, 20);
         tft.print("Spraying Enclosure");
 
-        digitalWrite(relay, HIGH);
+        digitalWrite(motor, HIGH);
         delay(wait);
-        digitalWrite(relay, LOW);
+        digitalWrite(motor, LOW);
 
         hours = assignedHours;
         minutes = 0;
@@ -401,14 +404,14 @@ void buttonPress() {
       tft.setTextSize(2);
       tft.setCursor(10, 20);
       tft.print("Spraying Enclosure");
-      digitalWrite(relay, HIGH);
+      digitalWrite(motor, HIGH);
       while (spraying) {
         delay(1000);
         subtractTime();
         waitTime = waitTime + 1000;
         if (waitTime == wait) {
           waitTime = 0;
-          digitalWrite(relay, LOW);
+          digitalWrite(motor, LOW);
           spraying = false;
         }
       }
