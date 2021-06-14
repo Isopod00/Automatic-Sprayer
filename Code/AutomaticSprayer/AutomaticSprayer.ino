@@ -61,8 +61,8 @@ int waitTime = 0;
 int wait = 15000;
 
 //int wifiEnable = 41;
-int motor = 45;
-int motorPin2 = 46;
+int motor = 46;
+int motorPin2 = 45;
 
 bool reconfiguring = true;
 bool spraying = false;
