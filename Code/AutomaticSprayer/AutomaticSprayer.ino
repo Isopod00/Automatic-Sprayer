@@ -6,17 +6,17 @@
 #include <TouchScreen.h>   // Core (non-specific) touchscreen library
 
 // Libraries required for WiFi connectivity & OTA updates //
-//#include <SPI.h>
-//#include <WiFi101.h>
-//#include <ArduinoOTA.h>
+#include <SPI.h>
+#include <WiFi101.h>
+#include <ArduinoOTA.h>
 
-// Enter sensitive data (WiFi name & password) in the Secret tab/arduino_secrets.h //
-//#include "arduino_secrets.h" 
+// Enter sensitive data (WiFi name & password) in the secrets tab (arduino_secrets.h) //
+#include "arduino_secrets.h" 
 
 // Wifi Settings //
-//char ssid[] = SECRET_SSID; // WiFi network SSID (name)
-//char pass[] = SECRET_PASS; // WiFi network password
-//int status = WL_IDLE_STATUS;
+char ssid[] = SECRET_SSID; // WiFi network SSID (name)
+char pass[] = SECRET_PASS; // WiFi network password
+int status = WL_IDLE_STATUS;
 
 // The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
 #define LCD_CS A3 // Chip Select goes to Analog 3
@@ -60,7 +60,6 @@ int time = 0;
 int waitTime = 0;
 int wait = 15000;
 
-//int wifiEnable = 41;
 int motor = 46;
 int motorPin2 = 45;
 
@@ -78,14 +77,9 @@ bool answered4 = false;
 void setup() {
   Serial.begin(9600); // Initialize serial 
 
-  //Configure pins for the Adafruit ATWINC1500 Breakout
-  //WiFi.setPins(35,37,39);
+  WiFi.setPins(35,37,39); // Configure pins for the Adafruit ATWINC1500 Breakout
 
-  // Manually enable the WiFi board //
-  //pinMode(wifiEnable, OUTPUT);
-  //digitalWrite(wifiEnable, HIGH);
-
-  //connectToNetwork(); // Connect to home WiFi network
+  connectToNetwork(); // Connect to home WiFi network
 
   tft.reset();
 
@@ -113,9 +107,9 @@ void setup() {
 }
 
 void loop() {
-  /*if (status == WL_CONNECTED) { 
+  if (status == WL_CONNECTED) { 
     ArduinoOTA.poll(); //Check for WiFi OTA updates }
-  }*/
+  }
   
   if (!reconfiguring) {
     buttonPress();
@@ -130,7 +124,7 @@ void loop() {
   }
 }
 
-/*void connectToNetwork() {
+void connectToNetwork() {
   // Check if the WiFi board is connected //
   if (WiFi.status() != WL_NO_SHIELD) {
     
@@ -144,7 +138,7 @@ void loop() {
   // start the WiFi OTA library with internal (flash) based storage
   ArduinoOTA.begin(WiFi.localIP(), "Arduino", "password", InternalStorage);
   }
-}*/
+}
   
 void boot() {
   tft.fillScreen(BACKGROUNDCOLOR);
@@ -184,9 +178,9 @@ void configSystem() {
   drawButton(20, 210, 80, 50, 4, "Yes", 0);
   drawButton(140, 210, 80, 50, 4, "No", 15);
   while (!answered1) {
-    /*if (status == WL_CONNECTED) { 
+    if (status == WL_CONNECTED) { 
       ArduinoOTA.poll(); //Check for WiFi OTA updates
-    }*/
+    }
   
     TSPoint p = ts.getPoint();
 
@@ -226,9 +220,9 @@ void configSystem() {
         drawButton(175, 200, 50, 50, 4, "12", -3);
 
         while (!answered2) {
-          /*if (status == WL_CONNECTED) { 
+          if (status == WL_CONNECTED) { 
             ArduinoOTA.poll(); //Check for WiFi OTA updates
-          }*/
+          }
   
           TSPoint p = ts.getPoint();
 
@@ -444,9 +438,9 @@ void config2()
   drawButton(140, 210, 80, 50, 4, "No", 15);
 
   while (!answered3) {
-    /*if (status == WL_CONNECTED) { 
+    if (status == WL_CONNECTED) { 
       ArduinoOTA.poll(); //Check for WiFi OTA updates
-    }*/
+    }
   
     TSPoint p = ts.getPoint();
 
@@ -486,9 +480,9 @@ void config2()
         drawButton(174, 200, 55, 50, 4, "30", 0);
 
         while (!answered4) {
-          /*if (status == WL_CONNECTED) { 
+          if (status == WL_CONNECTED) { 
             ArduinoOTA.poll(); //Check for WiFi OTA updates
-          }*/
+          }
   
           TSPoint p = ts.getPoint();
 
