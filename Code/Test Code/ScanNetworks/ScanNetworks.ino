@@ -1,38 +1,31 @@
-/*
-
- This example  prints the WiFi shield's MAC address, and
- scans for available WiFi networks using the WiFi shield.
+/* This example prints the WiFi modules's MAC address, and
+ scans for available WiFi networks using the WiFi module.
  Every ten seconds, it scans again. It doesn't actually
  connect to any network, so no encryption scheme is specified.
 
  Circuit:
- * WiFi shield attached
+ * WiFi module connected
 
  created 13 July 2010
  by dlf (Metodo2 srl)
  modified 21 Junn 2012
- by Tom Igoe and Jaymes Dec
- */
-
+ by Tom Igoe and Jaymes Dec */
 
 #include <SPI.h>
 #include <WiFi101.h>
 
 void setup() {
-  //Configure pins for Adafruit ATWINC1500 Breakout
+  //Configure pins for the Adafruit ATWINC1500 Breakout
   WiFi.setPins(35,37,39);
   
   //Initialize serial and wait for port to open:
   Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+  while (!Serial) {} // wait for serial port to connect. Needed for native USB port only
 
   // check for the presence of the shield:
   if (WiFi.status() == WL_NO_SHIELD) {
-    Serial.println("WiFi shield not present");
-    // don't continue:
-    while (true);
+    Serial.println("WiFi shield not present");  
+    while (true); // don't continue
   }
 
   // Print WiFi MAC address:

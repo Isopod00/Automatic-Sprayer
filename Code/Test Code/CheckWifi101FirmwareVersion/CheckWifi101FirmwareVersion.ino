@@ -1,13 +1,11 @@
-/*
- * This example check if the firmware loaded on the WiFi101
- * shield is updated.
+/* This example checks if the firmware loaded on the WiFi101 module is updated.
  *
  * Circuit:
- * - WiFi101 Shield attached
+ * - WiFi101 module connected
  *
  * Created 29 July 2015 by Cristian Maglie
- * This code is in the public domain.
- */
+ * This code is in the public domain. */
+ 
 #include <SPI.h>
 #include <WiFi101.h>
 #include <driver/source/nmasic.h>
@@ -18,9 +16,7 @@ void setup() {
 
   // Initialize serial
   Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+  while (!Serial) {} // wait for serial port to connect. Needed for native USB port only
 
   // Print a welcome message
   Serial.println("WiFi101 firmware check.");
@@ -64,6 +60,4 @@ void setup() {
   }
 }
 
-void loop() {
-  // do nothing
-}
+void loop() {} // Do Nothing
