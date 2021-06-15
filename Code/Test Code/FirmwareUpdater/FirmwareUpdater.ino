@@ -39,7 +39,7 @@ void setup() {
   //Configure pins for Adafruit ATWINC1500 Breakout
   WiFi.setPins(35,37,39);
   
-  Serial.begin(1000000); // The baud rate must be 1000000 for the firmware update to work!
+  Serial.begin(115200); // The baud rate must be 115200 for the firmware update to work!
 
   nm_bsp_init();
   if (m2m_wifi_download_mode() != M2M_SUCCESS) {
