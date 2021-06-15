@@ -1,31 +1,29 @@
-/*
-
- This example connects to an WPA encrypted WiFi network.
- Then it prints the  MAC address of the Wifi shield,
+/* This example connects to a WPA encrypted WiFi network.
+ Then it prints the MAC address of the Wifi module,
  the IP address obtained, and other network details.
  It then polls for sketch updates over WiFi, sketches
  can be updated by selecting a network port from within
- the Arduino IDE: Tools -> Port -> Network Ports ...
+ the Arduino IDE: Tools -> Port -> Network Ports, or by 
+ using the custom "Arduino OTA" programmer and Sketch -> Upload Using Programmer.
 
  Circuit:
- * WiFi shield attached
+ * WiFi module attached
 
  created 13 July 2010
  by dlf (Metodo2 srl)
  modified 31 May 2012
  by Tom Igoe
  modified 16 January 2017
- by Sandeep Mistry
- */
+ by Sandeep Mistry */
  
 #include <SPI.h>
 #include <WiFi101.h>
 #include <ArduinoOTA.h>
 
 #include "arduino_secrets.h" 
-///////please enter your sensitive data in the Secret tab/arduino_secrets.h
-/////// Wifi Settings ///////
-char ssid[] = SECRET_SSID;      // your network SSID (name)
+
+/////// Wifi Settings - please enter your sensitive data in the Secret tab (arduino_secrets.h)///////
+char ssid[] = SECRET_SSID;    // your network SSID (name)
 char pass[] = SECRET_PASS;   // your network password
 
 int status = WL_IDLE_STATUS;
@@ -36,11 +34,6 @@ void setup() {
 
   //Configure pins for the Adafruit ATWINC1500 Breakout
   WiFi.setPins(35,37,39);
-
-  // Manually enable the WiFi board //
-  pinMode(41, OUTPUT);
-  digitalWrite(41, LOW);
-  digitalWrite(41, HIGH);
 
   // check for the presence of the shield:
   if (WiFi.status() == WL_NO_SHIELD) {
@@ -67,8 +60,6 @@ void setup() {
 void loop() {
   // check for WiFi OTA updates
   ArduinoOTA.poll();
-
-  // add your normal loop code below ...
 }
 
 void printWifiStatus() {
