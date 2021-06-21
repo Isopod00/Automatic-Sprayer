@@ -25,7 +25,8 @@ The electronic components used in this project are:
   5. [Motorized Spray Bottle](https://www.amazon.com/Dynamic-1-touch-multi-purpose-motorized-bottle/dp/B01LXJ0SPG/ref=sr_1_8?dchild=1&keywords=motorized+spray+bottle&qid=1618870772&sr=8-8)
   6. [ELEGOO 9V 1A Barrel Plug Power Adapter](https://www.amazon.com/ELEGOO-100V-240V-Converter-Adapter-Certificate/dp/B074BRR5YN/ref=sr_1_3?dchild=1&keywords=elegoo+9v+1a+power+supply&qid=1619274712&sr=8-3)
   7. [DC Barrel Plug Splitter](https://www.amazon.com/PHC-DC-3Y-Barrel-Splitter-Female/dp/B009AZZ4ES/ref=sr_1_10?dchild=1&keywords=1+Female+to+2+Male+barrel+jack+splitter&qid=1619274904&sr=8-10)
-  8. [Adafruit ATWINC1500 WiFi Breakout Board](https://www.amazon.com/Adafruit-2999-ATWINC1500-WiFi-Breakout/dp/B01GVI1NKA/ref=sr_1_1?dchild=1&keywords=adafruit+ATWINC1500&qid=1619275000&sr=8-1)
+  8. [Flexible Breadboard Jumper Wires](https://www.amazon.com/Elegoo-EL-CP-004-Multicolored-Breadboard-arduino/dp/B01EV47GI4/ref=sr_1_2_sspa?crid=1GCV6BB0OBNDY&dchild=1&keywords=elegoo%2Bjumper%2Bcables&qid=1624300165&sprefix=elegoo%2Bjumper%2B%2Caps%2C181&sr=8-2-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyVTg0SVlWTVEzMk9aJmVuY3J5cHRlZElkPUEwNTUxMTAxMUxIUVQ0VUJHUk9CVCZlbmNyeXB0ZWRBZElkPUEwOTQ1MzIxMUVLUFZPSjk1OTFYOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1)
+  9. [Adafruit ATWINC1500 WiFi Breakout Board](https://www.amazon.com/Adafruit-2999-ATWINC1500-WiFi-Breakout/dp/B01GVI1NKA/ref=sr_1_1?dchild=1&keywords=adafruit+ATWINC1500&qid=1619275000&sr=8-1)
 
 ### 3D Printed Parts
 
