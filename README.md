@@ -5,12 +5,12 @@ This is my Automatic Sprayer project. I originally made a prototype of this proj
 
 ### Code
 
-All of the code for this project is in a single [.ino script](https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Code/AutomaticSprayer/AutomaticSprayer.ino) that is run by the Arduino Mega. 
+All of the code for this project is contained in a single [.ino script](https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Code/AutomaticSprayer/AutomaticSprayer.ino) that is run by an Arduino Mega 2560. 
 
 The main functions of the code are to:
-  1. Connect to my home wifi network to allow for OTA software update functionality
+  1. Connect to my home wifi network to allow for over-the-air software updates
   2. Allow the user to configure system settings such as the interval between sprays and the spray duration using the touch screen
-  3. Keep track of the time remaining until the next spray and display it to the user on the screen
+  3. Keep track of the time remaining until the next spray and display it to the user on the touch screen
   4. Allow the user to manually initiate a spray whenever they want via a digital button on the touch screen
 
 The code for this project utilizes the Elegoo_GFX, Elegoo_TFTLCD, Touchscreen, WiFi101, and ArduinoOTA libraries, all of which can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/Wifi-Enabled/Code/Libraries) in the project repository. The SPI library is also used, which is included in the Arduino IDE by default.
