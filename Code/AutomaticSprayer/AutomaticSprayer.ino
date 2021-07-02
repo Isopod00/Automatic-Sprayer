@@ -35,7 +35,6 @@ Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO
 #define halt(s) { Serial.println(F( s )); while(1);  }
 
 // Adafruit.io Feeds //
-// Setup a feed called 'spray-status' for subscribing to changes.
 Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/spray-status");
 
 // The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
