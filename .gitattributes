@@ -1,3 +1,3 @@
-*.gcode linguist-vendored=true
-*.c linguist-vendored=true
-*.h linguist-vendored=true
+*.gcode linguist-vendored
+*.c linguist-vendored
+*.h linguist-vendored
