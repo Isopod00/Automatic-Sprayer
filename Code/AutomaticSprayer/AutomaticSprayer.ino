@@ -9,6 +9,8 @@
 #include <SPI.h>
 #include <WiFi101.h>
 #include <ArduinoOTA.h>
+#include "Adafruit_MQTT.h"
+#include "Adafruit_MQTT_Client.h"
 
 // Enter sensitive data (WiFi name & password) in the secrets tab (arduino_secrets.h) //
 #include "arduino_secrets.h" 
@@ -17,6 +19,24 @@
 char ssid[] = SECRET_SSID; // WiFi network SSID (name)
 char pass[] = SECRET_PASS; // WiFi network password
 int status = WL_IDLE_STATUS;
+
+// Adafruit.io Settings //
+#define AIO_SERVER      "io.adafruit.com"
+#define AIO_SERVERPORT  1883
+#define AIO_USERNAME    SECRET_USERNAME
+#define AIO_KEY         SECRET_KEY
+
+//Set up the wifi client
+WiFiClient client;
+
+Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
+
+// You don't need to change anything below this line!
+#define halt(s) { Serial.println(F( s )); while(1);  }
+
+// Adafruit.io Feeds //
+// Setup a feed called 'spray-status' for subscribing to changes.
+Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/spray-status");
 
 // The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
 #define LCD_CS A3 // Chip Select goes to Analog 3
@@ -88,6 +108,8 @@ void setup() {
 
   digitalWrite(motorPin2, LOW);
 
+  mqtt.subscribe(&sprayStatus);
+
   uint16_t identifier = tft.readID();
   if (identifier == 0x9325) {
   } else if (identifier == 0x9328) {
@@ -107,6 +129,21 @@ void setup() {
 }
 
 void loop() {
+  MQTT_connect();
+  
+  // this is our 'wait for incoming subscription packets' busy subloop
+  Adafruit_MQTT_Subscribe *subscription;
+  while ((subscription = mqtt.readSubscription(5000))) {
+    if (subscription == &spray) {
+      Serial.print(F("Got: "));
+      Serial.println((char *)sprayStatus.lastread);
+
+      if (0 == strcmp((char *)sprayStatus.lastread, "ON")) {
+        spray();
+      }
+    }
+  }
+
   if (status == WL_CONNECTED) { 
     ArduinoOTA.poll(); //Check for WiFi OTA updates }
   }
@@ -157,6 +194,41 @@ void boot() {
   tft.setTextSize(4);
   tft.println("Welcome!");
   delay(4000);
+}
+
+// Function used to connect and reconnect as necessary to the MQTT server //
+void MQTT_connect() {
+  int8_t ret;
+
+  // attempt to connect to Wifi network:
+  while (WiFi.status() != WL_CONNECTED) {
+    Serial.print("Attempting to connect to SSID: ");
+    Serial.println(ssid);
+    // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
+    status = WiFi.begin(ssid, pass);
+
+    // wait 10 seconds for connection:
+    uint8_t timeout = 10;
+    while (timeout && (WiFi.status() != WL_CONNECTED)) {
+      timeout--;
+      delay(1000);
+    }
+  }
+  
+  // Stop if already connected.
+  if (mqtt.connected()) {
+    return;
+  }
+
+  Serial.print("Connecting to MQTT... ");
+
+  while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
+       Serial.println(mqtt.connectErrorString(ret));
+       Serial.println("Retrying MQTT connection in 5 seconds...");
+       mqtt.disconnect();
+       delay(5000);  // wait 5 seconds
+  }
+  Serial.println("MQTT Connected!");
 }
 
 void configSystem() {
@@ -342,6 +414,30 @@ void subtractTime() {
   }
 }
 
+void spray(){
+   spraying = true;
+   tft.fillRect(0, 0, 300, 50, BACKGROUNDCOLOR);
+   tft.setTextSize(2);
+   tft.setCursor(10, 20);
+   tft.print("Spraying Enclosure");
+   digitalWrite(motor, HIGH);
+   while (spraying) {
+      delay(1000);
+      subtractTime();
+      waitTime = waitTime + 1000;
+      if (waitTime == wait) {
+        waitTime = 0;
+        digitalWrite(motor, LOW);
+        spraying = false;
+      }
+    }
+    tft.fillRect(0, 15, 300, 30, BACKGROUNDCOLOR);
+    tft.setCursor(20, 1);
+    tft.print("Time Until Next");
+    tft.setCursor(5, 21);
+    tft.print("Spray: ");
+}
+
 void endConfig() {
   wait = assignedWait;
   hours = assignedHours;
@@ -393,27 +489,7 @@ void buttonPress() {
       configSystem();
     }
     if (p.x > 520 && p.x < 660 && p.y > 295 && p.y < 705) {
-      spraying = true;
-      tft.fillRect(0, 0, 300, 50, BACKGROUNDCOLOR);
-      tft.setTextSize(2);
-      tft.setCursor(10, 20);
-      tft.print("Spraying Enclosure");
-      digitalWrite(motor, HIGH);
-      while (spraying) {
-        delay(1000);
-        subtractTime();
-        waitTime = waitTime + 1000;
-        if (waitTime == wait) {
-          waitTime = 0;
-          digitalWrite(motor, LOW);
-          spraying = false;
-        }
-      }
-      tft.fillRect(0, 15, 300, 30, BACKGROUNDCOLOR);
-      tft.setCursor(20, 1);
-      tft.print("Time Until Next");
-      tft.setCursor(5, 21);
-      tft.print("Spray: ");
+      spray();
     }
   }
   //This is important because the tft and touchscreen libraries are sharing pins
