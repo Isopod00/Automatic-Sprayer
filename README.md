@@ -17,7 +17,7 @@ The main functions of the code are to:
 
 The code for this project utilizes the Elegoo_GFX, Elegoo_TFTLCD, Touchscreen, WiFi101, and ArduinoOTA libraries, all of which can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/Wifi-Enabled/Code/Libraries) in the project repository. The SPI library is also used, which is included in the Arduino IDE by default.
 
-![Display](https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Touchscreen%20Display.jpg?raw=true)
+![Display](https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Touchscreen%20Display.jpg?raw=true&s=200)
 
 ### Electronics
 
