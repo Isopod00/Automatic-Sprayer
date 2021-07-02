@@ -4,7 +4,7 @@ By Anthony Brogni
 This is my Automatic Sprayer project. I originally made a prototype of this project in 2017 but was not completely satisfied with the results, so I decided to go back and improve it. I have been making changes to this project ever since, and I believe it has improved greatly over the past 4 years. This project is an Arduino-controlled automatic sprayer that can be used to keep plants and pets hydrated while you're away from home. When you first plug it in you are prompted to configure the system, and then after that, you're good to go! Some nice features of this project are spray scheduling and spray duration control, a visual countdown clock to the next spray, and a manual spray button. Another notable feature that I recently added is Wifi-connectivity so that the project can connect to the user's home Wifi network, enabling over-the-air software updates.
 
 <p align="center">
-  <img alt="Sprayer Stand" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Full%20Stand.jpg?" width="60%"> 
+  <img alt="Sprayer Stand" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Full%20Stand.jpg?raw=true" width="60%"> 
 </p>
 
 ### Code
@@ -20,7 +20,7 @@ The main functions of the code are to:
 The code for this project utilizes the Elegoo_GFX, Elegoo_TFTLCD, Touchscreen, WiFi101, and ArduinoOTA libraries, all of which can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/Wifi-Enabled/Code/Libraries) in the project repository. The SPI library is also used, which is included in the Arduino IDE by default.
 
 
-<img align="right" alt="Touchscreen Display" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Touchscreen%20Display.jpg?" width="40%"> 
+<img align="right" alt="Touchscreen Display" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Touchscreen%20Display.jpg?raw=true" width="40%"> 
 
 <p>&nbsp;</p>
 
@@ -40,7 +40,7 @@ The electronic components used in this project are:
 <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 
 <p align="center">
-  <img alt="Electronic Components" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Components%20in%20the%20Stand.jpg?" width="100%"> 
+  <img alt="Electronic Components" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Components%20in%20the%20Stand.jpg?raw=true" width="100%"> 
 </p>
 
 ### 3D Printed Parts
