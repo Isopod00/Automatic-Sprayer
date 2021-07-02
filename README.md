@@ -47,5 +47,3 @@ For this project I designed and 3D Printed a stand for the sprayer that also hou
 **Filament Used:** Black PLA
 
 All of the STL and sliced G-Code files can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/Wifi-Enabled/CAD%20Files) in the project repository.
-
-![3D Printed Stand](https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Front%20Panel%20Removed.jpg?raw=true)
