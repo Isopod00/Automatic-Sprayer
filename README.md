@@ -28,14 +28,16 @@ The electronic components used in this project are:
   8. [Flexible Breadboard Jumper Wires](https://www.amazon.com/Elegoo-EL-CP-004-Multicolored-Breadboard-arduino/dp/B01EV47GI4/ref=sr_1_2_sspa?crid=1GCV6BB0OBNDY&dchild=1&keywords=elegoo%2Bjumper%2Bcables&qid=1624300165&sprefix=elegoo%2Bjumper%2B%2Caps%2C181&sr=8-2-spons&spLa=ZW5jcnlwdGVkUXVhbGlmaWVyPUEyVTg0SVlWTVEzMk9aJmVuY3J5cHRlZElkPUEwNTUxMTAxMUxIUVQ0VUJHUk9CVCZlbmNyeXB0ZWRBZElkPUEwOTQ1MzIxMUVLUFZPSjk1OTFYOSZ3aWRnZXROYW1lPXNwX2F0ZiZhY3Rpb249Y2xpY2tSZWRpcmVjdCZkb05vdExvZ0NsaWNrPXRydWU&th=1)
   9. [Adafruit ATWINC1500 WiFi Breakout Board](https://www.amazon.com/Adafruit-2999-ATWINC1500-WiFi-Breakout/dp/B01GVI1NKA/ref=sr_1_1?dchild=1&keywords=adafruit+ATWINC1500&qid=1619275000&sr=8-1)
 
+![Components](https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Components%20in%20the%20Stand.jpg)
+
 ### 3D Printed Parts
 
 For this project I designed and 3D Printed a stand for the sprayer that also houses the electronics inside of it to keep everything compact.
 
 **CAD Program Used:** Fusion 360
 
-**Slicer Program Used:** Ultimaker Cura 
-
+**Slicer Program Used:** Ultimaker Cura                       
+                          
 **3D Printer Used:** Ender 5 Pro
 
 **Filament Used:** Black PLA
