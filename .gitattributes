@@ -1,2 +1,2 @@
-*.gcode linguist-vendored=true
+*.gcode linguist-vendored
 *.ino linguist-vendored=false
