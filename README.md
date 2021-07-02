@@ -40,7 +40,7 @@ The electronic components used in this project are:
 <p>&nbsp;</p><p>&nbsp;</p>
 
 <p align="center">
-  <img alt="Electronic Components" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Components%20in%20the%20Stand.jpg?" width="100%"> 
+  <img alt="Electronic Components" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Components%20in%20the%20Stand.jpg?raw=true" width="100%"> 
 </p>
 
 ### 3D Printed Parts
