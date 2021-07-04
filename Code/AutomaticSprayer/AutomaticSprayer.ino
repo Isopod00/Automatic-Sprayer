@@ -5,7 +5,7 @@
 #include <Elegoo_TFTLCD.h> // Hardware-specific library
 #include <TouchScreen.h>   // Core (non-specific) touchscreen library
 
-// Libraries required for WiFi connectivity & OTA updates //
+// Libraries required for WiFi connectivity, OTA updates, & Adafruit.io //
 #include <SPI.h>
 #include <WiFi101.h>
 #include <ArduinoOTA.h>
@@ -31,11 +31,10 @@ WiFiClient client;
 
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
-// You don't need to change anything below this line!
-#define halt(s) { Serial.println(F( s )); while(1);  }
+#define halt(s) { Serial.println(F( s )); while(1);  } // Don't change this line
 
 // Adafruit.io Feeds //
-Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/spray-status");
+Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/Spray Status");
 
 // The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
 #define LCD_CS A3 // Chip Select goes to Analog 3
@@ -130,16 +129,14 @@ void setup() {
 void loop() {
   MQTT_connect();
   
-  // this is our 'wait for incoming subscription packets' busy subloop
   Adafruit_MQTT_Subscribe *subscription;
-  while ((subscription = mqtt.readSubscription(5000))) {
-    if (subscription == &spray) {
-      Serial.print(F("Got: "));
-      Serial.println((char *)sprayStatus.lastread);
+  
+  if (subscription == &spray) {
+    Serial.print(F("Recieved: "));
+    Serial.println((char *)sprayStatus.lastread);
 
-      if (0 == strcmp((char *)sprayStatus.lastread, "ON")) {
+    if (0 == strcmp((char *)sprayStatus.lastread, "ON")) {
         spray();
-      }
     }
   }
 
