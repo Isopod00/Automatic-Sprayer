@@ -158,11 +158,6 @@ void loop() {
   else {
     time++;
   }
-
-  /* Ping the Adafruit.io server so we stay connected //
-  if(!mqtt.ping()) {
-    mqtt.disconnect();
-  } */
 }
 
 void connectToNetwork() {
