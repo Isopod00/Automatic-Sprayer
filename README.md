@@ -1,7 +1,7 @@
 # Automatic Sprayer
 Created By Anthony Brogni
 
-This is my Automatic Sprayer project. I originally made a prototype of this project in 2017 but was not completely satisfied with the results, so I decided to go back and improve it. I have been making changes to this project ever since, and I believe it has improved greatly over the past 4 years. This project is an Arduino-controlled automatic sprayer that can be used to keep plants and pets hydrated while you're away from home. When you first plug it in you are prompted to configure the system, and then after that, you're good to go! Some nice features of this project are spray scheduling and spray duration control, a visual countdown clock to the next spray, and a manual spray button. Another notable feature that I recently added is Wifi-connectivity so that the project can connect to the user's home Wifi network, enabling over-the-air software updates.
+This is my Automatic Sprayer project. I originally made a prototype of this project in 2017 but was not completely satisfied with the results, so I decided to go back and improve it. I have been making changes to this project ever since, and I believe it has improved greatly over the past 4 years. This project is an Arduino-controlled automatic sprayer that can be used to keep plants and pets hydrated while you're away from home. When you first plug it in you are prompted to configure the system, and then after that, you're good to go! Some nice features of this project are spray scheduling and spray duration control, a visual countdown clock to the next spray, and a manual spray button. Another notable feature that I recently added is Wifi connectivity so that the project can connect to the user's home Wifi network, enabling over-the-air software updates. In addition to over-the-air software updates, Wifi connectivity also allows the project to connect to the Adafruit IO web service for control over wifi. This means that by using my phone from anywhere in the world, as long as I am connected to the internet, I can trigger the sprayer to start spraying!
 
 <p align="center">
   <img alt="Sprayer Stand" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Full%20Stand.jpg?raw=true" width="60%"> 
@@ -13,11 +13,12 @@ All of the code for this project is contained in a single [.ino script](https://
 
 The main functions of the code are to:
   1. Connect to my home wifi network to allow for over-the-air software updates
-  2. Allow the user to configure system settings such as the interval between sprays and the spray duration using the touch screen
-  3. Keep track of the time remaining until the next spray and display it to the user on the touch screen
-  4. Allow the user to manually initiate a spray whenever they want via a digital button on the touch screen
+  2. Connect to the Adafruit IO service to allow for commands to be sent over Wifi
+  3. Allow the user to configure system settings such as the interval between sprays and the spray duration using the touch screen
+  4. Keep track of the time remaining until the next spray and display it to the user on the touch screen
+  5. Allow the user to manually initiate a spray whenever they want via a digital button on the touch screen
 
-The code for this project utilizes the Elegoo_GFX, Elegoo_TFTLCD, Touchscreen, WiFi101, and ArduinoOTA libraries, all of which can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/Wifi-Enabled/Code/Libraries) in the project repository. The SPI library is also used, which is included in the Arduino IDE by default.
+The code for this project utilizes the Elegoo_GFX, Elegoo_TFTLCD, Touchscreen, WiFi101, ArduinoOTA, and Adafruit_MQTT libraries, all of which can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/Wifi-Enabled/Code/Libraries) in the project repository. The SPI library is also used, which is included in the Arduino IDE by default.
 
 
 <img align="right" alt="Touchscreen Display" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Touchscreen%20Display.jpg?raw=true" width="40%"> 
