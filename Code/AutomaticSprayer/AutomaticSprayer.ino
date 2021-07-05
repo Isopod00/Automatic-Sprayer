@@ -83,7 +83,6 @@ int wait = 15000;
 int motor = 46;
 int motorPin2 = 45;
 
-bool reconfiguring = true;
 bool spraying = false;
 
 int assignedHours = 8;
@@ -148,17 +147,16 @@ void loop() {
   if (status == WL_CONNECTED) { 
     ArduinoOTA.poll(); //Check for WiFi OTA updates }
   }
-  
-  if (!reconfiguring) {
-    buttonPress();
-    delay(8);
-    if (time == 125) {
-      time = 0;
-      subtractTime();
-    }
-    else {
-      time++;
-    }
+
+  // Check for button presses and add time to the loop so counting by seconds is accurate //
+  buttonPress();
+  delay(5);
+  if (time == 60) {
+    time = 0;
+    subtractTime();
+  }
+  else {
+    time++;
   }
 
   /* Ping the Adafruit.io server so we stay connected //
@@ -469,7 +467,6 @@ void endConfig() {
   tft.print(seconds);
   drawButton(50, 112, 130, 50, 4, "Spray", 0);
   drawButton(15, 250, 210, 40, 3, "Reconfigure", 0);
-  reconfiguring = false;
 }
 
 void drawButton(int x1, int y1, int width, int height, int textSize, String text, int textOffset) {
@@ -500,7 +497,6 @@ void buttonPress() {
       answered3 = false;
       answered4 = false;
 
-      reconfiguring = true;
       configSystem();
     }
     if (p.x > 520 && p.x < 660 && p.y > 295 && p.y < 705) {
