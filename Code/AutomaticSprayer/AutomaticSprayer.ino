@@ -5,14 +5,16 @@
 #include <Elegoo_TFTLCD.h> // Hardware-specific library
 #include <TouchScreen.h>   // Core (non-specific) touchscreen library
 
-// Libraries required for WiFi connectivity, OTA updates, & Adafruit.io //
+// Libraries required for WiFi connectivity & OTA updates //
 #include <SPI.h>
 #include <WiFi101.h>
 #include <ArduinoOTA.h>
+
+// Libraries Required for integration with Adafruit.io //
 #include "Adafruit_MQTT.h"
 #include "Adafruit_MQTT_Client.h"
 
-// Enter sensitive data (WiFi name & password) in the secrets tab (arduino_secrets.h) //
+// Enter sensitive data (like WiFi name & password) in the secrets tab (arduino_secrets.h) //
 #include "arduino_secrets.h" 
 
 // Wifi Settings //
@@ -28,13 +30,12 @@ int status = WL_IDLE_STATUS;
 
 //Set up the wifi client
 WiFiClient client;
-
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
-#define halt(s) { Serial.println(F( s )); while(1);  } // Don't change this line
+#define halt(s) { Serial.println(F( s )); while(1);  } // Don't change this line, defines the halt method
 
 // Adafruit.io Feeds //
-Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/Spray Status");
+Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/spraying");
 
 // The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
 #define LCD_CS A3 // Chip Select goes to Analog 3
@@ -49,6 +50,7 @@ Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAM
 #define YM 8   // can be a digital pin
 #define XP 9   // can be a digital pin
 
+// The min and max values for the x and y coordinates of the touchscreen //
 #define TS_MINX 130
 #define TS_MINY 130
 #define TS_MAXX 940
@@ -64,8 +66,8 @@ Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAM
 #define YELLOW  0xFFE0
 #define WHITE   0xFFFF
 
-#define BACKGROUNDCOLOR CYAN // Custom the background color of the display!
-#define TEXTCOLOR BLACK // Custom the color of text that is displayed!
+#define BACKGROUNDCOLOR CYAN // Customize the background color of the display!
+#define TEXTCOLOR BLACK // Customize the color of text that is displayed!
 
 Elegoo_TFTLCD tft(LCD_CS, LCD_CD, LCD_WR, LCD_RD, LCD_RESET);
 TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
@@ -93,9 +95,9 @@ bool answered3 = false;
 bool answered4 = false;
 
 void setup() {
-  Serial.begin(9600); // Initialize serial 
-
   WiFi.setPins(35,37,39); // Configure pins for the Adafruit ATWINC1500 Breakout
+  
+  Serial.begin(9600); // Initialize serial 
 
   connectToNetwork(); // Connect to home WiFi network
 
@@ -122,6 +124,7 @@ void setup() {
     identifier = 0x9341;
   }
   tft.begin(identifier);
+  
   boot();
   configSystem();
 }
@@ -130,13 +133,15 @@ void loop() {
   MQTT_connect();
   
   Adafruit_MQTT_Subscribe *subscription;
-  
-  if (subscription == &spray) {
-    Serial.print(F("Recieved: "));
+
+  subscription = mqtt.readSubscription();
+
+  if (subscription == &sprayStatus) {
+    Serial.print(F("Got: "));
     Serial.println((char *)sprayStatus.lastread);
 
     if (0 == strcmp((char *)sprayStatus.lastread, "ON")) {
-        spray();
+      spray();;
     }
   }
 
@@ -155,6 +160,11 @@ void loop() {
       time++;
     }
   }
+
+  /* Ping the Adafruit.io server so we stay connected //
+  if(!mqtt.ping()) {
+    mqtt.disconnect();
+  } */
 }
 
 void connectToNetwork() {
@@ -167,6 +177,15 @@ void connectToNetwork() {
     Serial.println(ssid);
     status = WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
   }
+
+  // print the SSID of the network you're attached to:
+  Serial.print("SSID: ");
+  Serial.println(WiFi.SSID());
+
+  // print your WiFi shield's IP address:
+  IPAddress ip = WiFi.localIP();
+  Serial.print("IP Address: ");
+  Serial.println(ip);
 
   // start the WiFi OTA library with internal (flash) based storage
   ArduinoOTA.begin(WiFi.localIP(), "Arduino", "password", InternalStorage);
