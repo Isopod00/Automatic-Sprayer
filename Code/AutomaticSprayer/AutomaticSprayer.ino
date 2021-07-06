@@ -32,7 +32,6 @@ int status = WL_IDLE_STATUS;
 WiFiClient client;
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
-#define halt(s) { Serial.println(F( s )); while(1);  } // Don't change this line, defines the halt method
 #define MQTT_CONN_KEEPALIVE 43200; //The server will keep the socket open, unless it has not heard from the device in 12 hours
 
 // Adafruit.io Feeds //
@@ -131,7 +130,12 @@ void setup() {
 }
 
 void loop() {
-  MQTT_connect();
+  if (status == WL_CONNECTED) { 
+    ArduinoOTA.poll(); // Check for OTA updates over WiFi
+    MQTT_connect(); // Connect or Reconnect to the MQTT service
+  } else {
+    connectToNetwork(); // Try reconnecting to home WiFi network
+  }
   
   Adafruit_MQTT_Subscribe *subscription;
 
@@ -144,10 +148,6 @@ void loop() {
     if (0 == strcmp((char *)sprayStatus.lastread, "ON")) {
       spray();;
     }
-  }
-
-  if (status == WL_CONNECTED) { 
-    ArduinoOTA.poll(); //Check for WiFi OTA updates }
   }
 
   // Check for button presses and add time to the loop so counting by seconds is accurate //
@@ -195,7 +195,7 @@ void boot() {
   tft.setTextSize(2);
   tft.println("Automatic Sprayer");
   tft.setCursor(100, 22);
-  tft.println("v3.0");
+  tft.println("v3.5");
   tft.setCursor(80, 280);
   tft.println("Made by");
   tft.setCursor(40, 300);
@@ -209,22 +209,7 @@ void boot() {
 // Function used to connect and reconnect as necessary to the MQTT server //
 void MQTT_connect() {
   int8_t ret;
-
-  // attempt to connect to Wifi network:
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print("Attempting to connect to SSID: ");
-    Serial.println(ssid);
-    // Connect to WPA/WPA2 network. Change this line if using open or WEP network:
-    status = WiFi.begin(ssid, pass);
-
-    // wait 10 seconds for connection:
-    uint8_t timeout = 10;
-    while (timeout && (WiFi.status() != WL_CONNECTED)) {
-      timeout--;
-      delay(1000);
-    }
-  }
-  
+ 
   // Stop if already connected.
   if (mqtt.connected()) {
     return;
