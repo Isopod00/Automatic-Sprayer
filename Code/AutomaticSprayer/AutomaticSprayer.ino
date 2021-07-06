@@ -36,6 +36,7 @@ Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO
 
 // Adafruit.io Feeds //
 Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/spraying");
+Adafruit_MQTT_Publish confirmSpray = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/sprayconfirmed");
 
 // The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
 #define LCD_CS A3 // Chip Select goes to Analog 3
@@ -393,11 +394,13 @@ void subtractTime() {
         tft.setTextSize(2);
         tft.setCursor(10, 20);
         tft.print("Spraying Enclosure");
+        confirmSpray.publish(1.0);
 
         digitalWrite(motor, HIGH);
         delay(wait);
         digitalWrite(motor, LOW);
 
+        confirmSpray.publish(0.0);
         hours = assignedHours;
         minutes = 0;
         seconds = 0;
@@ -424,6 +427,8 @@ void subtractTime() {
 
 void spray(){
    spraying = true;
+   confirmSpray.publish(1.0);
+   
    tft.fillRect(0, 0, 300, 50, BACKGROUNDCOLOR);
    tft.setTextSize(2);
    tft.setCursor(10, 20);
@@ -437,6 +442,7 @@ void spray(){
         waitTime = 0;
         digitalWrite(motor, LOW);
         spraying = false;
+        confirmSpray.publish(0.0);
       }
     }
     tft.fillRect(0, 15, 300, 30, BACKGROUNDCOLOR);
