@@ -33,6 +33,7 @@ WiFiClient client;
 Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO_KEY);
 
 #define halt(s) { Serial.println(F( s )); while(1);  } // Don't change this line, defines the halt method
+#define MQTT_CONN_KEEPALIVE 43200; //The server will keep the socket open, unless it has not heard from the device in 12 hours
 
 // Adafruit.io Feeds //
 Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/spraying");
