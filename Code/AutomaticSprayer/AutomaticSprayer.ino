@@ -208,8 +208,7 @@ void boot() {
 
 // Function used to connect and reconnect as necessary to the MQTT server //
 void MQTT_connect() {
-  int8_t ret;
- 
+   
   // Stop if already connected.
   if (mqtt.connected()) {
     return;
@@ -217,13 +216,11 @@ void MQTT_connect() {
 
   Serial.print("Connecting to MQTT... ");
 
-  while ((ret = mqtt.connect()) != 0) { // connect will return 0 for connected
-       Serial.println(mqtt.connectErrorString(ret));
-       Serial.println("Retrying MQTT connection in 5 seconds...");
-       mqtt.disconnect();
-       delay(5000);  // wait 5 seconds
+  if(mqtt.connect() == 0) {
+    Serial.println("MQTT Connected!");
+  } else {
+    Serial.println("Connect to MWTT FAILED");
   }
-  Serial.println("MQTT Connected!");
 }
 
 void configSystem() {
