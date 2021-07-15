@@ -389,6 +389,8 @@ void subtractTime() {
         digitalWrite(motor, LOW);
 
         confirmSpray.publish(0.0);
+        remainingSprays--;
+        
         hours = assignedHours;
         minutes = 0;
         seconds = 0;
@@ -431,6 +433,7 @@ void spray(){
         digitalWrite(motor, LOW);
         spraying = false;
         confirmSpray.publish(0.0);
+        remainingSprays--;
       }
     }
     tft.fillRect(0, 15, 300, 30, BACKGROUNDCOLOR);
