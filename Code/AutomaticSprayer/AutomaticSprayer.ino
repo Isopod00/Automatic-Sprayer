@@ -38,6 +38,9 @@ Adafruit_MQTT_Client mqtt(&client, AIO_SERVER, AIO_SERVERPORT, AIO_USERNAME, AIO
 Adafruit_MQTT_Subscribe sprayStatus = Adafruit_MQTT_Subscribe(&mqtt, AIO_USERNAME "/feeds/spraying");
 Adafruit_MQTT_Publish confirmSpray = Adafruit_MQTT_Publish(&mqtt, AIO_USERNAME "/feeds/sprayconfirmed");
 
+const int totalSprayTime = 825; // Measured in seconds
+int remainingSprays;
+
 // The control pins for the LCD can be assigned to any digital or analog pins, but using the analog pins allows for doubling up the pins with the touch screen (see the TFT paint example).
 #define LCD_CS A3 // Chip Select goes to Analog 3
 #define LCD_CD A2 // Command/Data goes to Analog 2
@@ -127,6 +130,8 @@ void setup() {
   
   boot();
   configSystem();
+
+  remainingSprays = totalSprayTime / (assignedWait / 1000); // divide by 1000 converts milliseconds to seconds
 }
 
 void loop() {
