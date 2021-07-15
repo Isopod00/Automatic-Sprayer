@@ -143,15 +143,11 @@ void loop() {
   }
   
   Adafruit_MQTT_Subscribe *subscription;
-
   subscription = mqtt.readSubscription();
 
   if (subscription == &sprayStatus) {
-    Serial.print(F("Got: "));
-    Serial.println((char *)sprayStatus.lastread);
-
     if (0 == strcmp((char *)sprayStatus.lastread, "ON")) {
-      spray();;
+      spray();
     }
   }
 
@@ -177,15 +173,10 @@ void connectToNetwork() {
     Serial.println(ssid);
     status = WiFi.begin(ssid, pass); // Connect to WPA/WPA2 network. Change this line if using open or WEP network
   }
-
-  // print the SSID of the network you're attached to:
-  Serial.print("SSID: ");
-  Serial.println(WiFi.SSID());
-
-  // print your WiFi shield's IP address:
-  IPAddress ip = WiFi.localIP();
-  Serial.print("IP Address: ");
-  Serial.println(ip);
+  
+  Serial.print("Successfully connected to SSID: ");
+  Serial.print(WiFi.SSID());
+  Serial.println("!");
 
   // start the WiFi OTA library with internal (flash) based storage
   ArduinoOTA.begin(WiFi.localIP(), "Arduino", "password", InternalStorage);
@@ -213,7 +204,6 @@ void boot() {
 
 // Function used to connect and reconnect as necessary to the MQTT server //
 void MQTT_connect() {
-   
   // Stop if already connected.
   if (mqtt.connected()) {
     return;
@@ -224,7 +214,7 @@ void MQTT_connect() {
   if(mqtt.connect() == 0) {
     Serial.println("MQTT Connected!");
   } else {
-    Serial.println("Connect to MWTT FAILED");
+    Serial.println("Connect to MQTT FAILED");
   }
 }
 
