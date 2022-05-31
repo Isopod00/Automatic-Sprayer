@@ -4,12 +4,12 @@ Created By Anthony Brogni
 This GitHub page is for my Automatic Sprayer project. I originally made a prototype of this project in 2017 but was not completely satisfied with the results, so I decided to go back and improve it. I have been continuously improving my Automatic Sprayer project over the past four years. This project is an Arduino-controlled automatic sprayer that can keep plants and pets hydrated while you're away from home. When you first plug it in, you are prompted to configure the system, and then after that, you're good to go! Some features of this project are spray scheduling and spray duration control, a visual countdown clock to the next spray, and a manual spray button. Another notable feature that I recently added is Wifi connectivity so that the project can connect to the user's home Wifi network. This Wifi connectivity allows the project to connect to the Adafruit IO web service for control over wifi. As long as I am connected to the internet, I can use my phone to trigger the sprayer and monitor the current status of the sprayer from anywhere in the world. I can even view an estimate of how many sprays are left before the sprayer will need to be refilled!  Using the IFTTT service, I have also connected this project to the Amazon Alexa voice service, allowing me to trigger sprays by giving a voice command to my Alexa-enabled devices. As you can see, there are many ways that my Automatic Sprayer project can be controlled and monitored, which makes it easy and convenient to use for everyone!
 
 <p align="center">
-  <img alt="Sprayer Stand" src="https://github.com/Isopod00/Automatic-Sprayer/Pictures/Full%20Stand.jpg?raw=true" width="60%"> 
+  <img alt="Sprayer Stand" src="https://github.com/Isopod00/Automatic-Sprayer/blob/mainPictures/Full%20Stand.jpg?raw=true" width="60%"> 
 </p>
 
 ### Code
 
-All of the code for this project is contained in a single [.ino script](https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Code/AutomaticSprayer/AutomaticSprayer.ino) that is run by an Arduino Mega 2560. 
+All of the code for this project is contained in a single [.ino script](https://github.com/Isopod00/Automatic-Sprayer/blob/main/Code/AutomaticSprayer/AutomaticSprayer.ino) that is run by an Arduino Mega 2560. 
 
 The main functions of the code are to:
   1. Connect to my home wifi network
@@ -19,9 +19,9 @@ The main functions of the code are to:
   5. Keep track of how many sprays are remaining until the sprayer needs to be refilled and display this to the user
   6. Allow the user to manually initiate a spray whenever they want via a digital button on the touch screen
 
-The code for this project utilizes the Elegoo_GFX, Elegoo_TFTLCD, Touchscreen, WiFi101, and Adafruit_MQTT libraries, all of which can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/Wifi-Enabled/Code/Libraries) in the project repository. The SPI library is also used, which is included in the Arduino IDE by default.
+The code for this project utilizes the Elegoo_GFX, Elegoo_TFTLCD, Touchscreen, WiFi101, and Adafruit_MQTT libraries, all of which can be found [here](https://github.com/Isopod00/Automatic-Sprayer/tree/main/Code/Libraries) in the project repository. The SPI library is also used, which is included in the Arduino IDE by default.
 
-<img align="right" alt="Touchscreen Display" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Touchscreen%20Display.jpg?raw=true" width="40%"> 
+<img align="right" alt="Touchscreen Display" src="https://github.com/Isopod00/Automatic-Sprayer/blob/main/Pictures/Touchscreen%20Display.jpg?raw=true" width="40%"> 
 
 <p>&nbsp;</p>
 
@@ -41,7 +41,7 @@ The electronic components used in this project are:
 <p>&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>
 
 <p align="center">
-  <img alt="Electronic Components" src="https://github.com/Isopod00/Automatic-Sprayer/blob/Wifi-Enabled/Pictures/Components%20in%20the%20Stand.jpg?raw=true" width="100%"> 
+  <img alt="Electronic Components" src="https://github.com/Isopod00/Automatic-Sprayer/blob/main/Pictures/Components%20in%20the%20Stand.jpg?raw=true" width="100%"> 
 </p>
 
 ### 3D Printed Parts
@@ -53,5 +53,5 @@ For this project, I designed a 3D-printed stand for the sprayer that also houses
   <b>Slicer Program Used:</b> Ultimaker Cura <br>                                             
   <b>3D Printer Used:</b> Ender 5 Pro &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <b>Filament Used:</b> Black PLA <br><br>
-  All of the STL and sliced G-Code files can be found <a href="https://github.com/Isopod00/Automatic-Sprayer/tree/Wifi-Enabled/CAD%20Files">here</a> in the project repository.
+  All of the STL and sliced G-Code files can be found <a href="https://github.com/Isopod00/Automatic-Sprayer/tree/main/CAD%20Files">here</a> in the project repository.
 </p>
