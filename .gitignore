@@ -1,3 +1,6 @@
+.DS_Store
+Code/AutomaticSprayer/arduino_secrets.h
+
 # Prerequisites
 *.d
 
